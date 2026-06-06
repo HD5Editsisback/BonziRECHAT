@@ -459,6 +459,12 @@ var videoIdsCommercials = [
   "https://www.youtube.com/watch?v=RSUPWfl2_eM",
   "https://www.youtube.com/watch?v=2VigAisCxTk",  
   "https://www.youtube.com/watch?v=d1L_XmMsCP8",  
+  "https://www.youtube.com/watch?v=fPzxleoTv5Q",
+  "https://www.youtube.com/watch?v=NCVhOO-Srtw",
+  "https://www.youtube.com/watch?v=WoPJYBXRLsg",
+  "https://www.youtube.com/watch?v=8_10z76b5wA",
+  "https://www.youtube.com/watch?v=v_CesAEJzsY",
+  "https://www.youtube.com/watch?v=F40x4iEzVjM",  
 ];
 //I'M SORRY COLIN
 //just kidding! i'm not sorry!~ >w<
