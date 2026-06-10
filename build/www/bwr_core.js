@@ -9911,6 +9911,41 @@ $(window).load(function () {
         $("#chat_log_button").show();
         $("#chat_log").hide();
     });
+    // Start menu toggle
+const startButton = document.getElementById("start_button");
+const startMenu = document.getElementById("start_menu");
+
+if (startButton && startMenu) {
+    startButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        startMenu.hidden = !startMenu.hidden;
+    });
+
+    // Close menu when clicking outside
+    document.body.addEventListener("click", (e) => {
+        if (!startMenu.contains(e.target) && e.target !== startButton) {
+            startMenu.hidden = true;
+        }
+    });
+
+    // Settings item
+    const settingsItem = document.getElementById("settings_button");
+    if (settingsItem) {
+        settingsItem.addEventListener("click", () => {
+            startMenu.hidden = true;
+            openSettings();      // already defined in the second codebase
+        });
+    }
+
+    // Help item
+    const helpItem = document.getElementById("help_button");
+    if (helpItem) {
+        helpItem.addEventListener("click", () => {
+            startMenu.hidden = true;
+            helpPopup();         // already defined (shows README)
+        });
+    }
+}
     window.onresize = () => {
         for (const id in agents) {
             const agent = agents[id];

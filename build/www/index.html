@@ -178,6 +178,32 @@ body {
                 <tbody>
                     <tr>
                         <td id="chat_send">Send</td>
+                        <!-- Inside <table id="chat_bar">, after the opening <tbody> and <tr> -->
+<td id="start_button">+</td>
+
+<!-- Inside <div id="content">, after the existing elements (e.g. after #chat_log) -->
+<div id="start_menu" hidden>
+    			<div id="start_menu_pfp"></div>
+			<input id="start_menu_name" autocorrect="off" maxlength="25" value="Anonymous">
+    <div id="start_menu_body">
+        <!-- Settings -->
+        <div id="settings_button" class="start_menu_item">
+            <img class="start_menu_item_icon" src="./img/desktop/cp.webp">
+            <div class="start_menu_item_details">
+                <div class="start_menu_item_name">Settings</div>
+                <div class="start_menu_item_description">Configure your experience</div>
+            </div>
+        </div>
+        <!-- Help -->
+        <div id="help_button" class="start_menu_item">
+            <img class="start_menu_item_icon" src="./img/desktop/help.webp">
+            <div class="start_menu_item_details">
+                <div class="start_menu_item_name">Help</div>
+                <div class="start_menu_item_description">View the README</div>
+            </div>
+        </div>
+    </div>
+</div>
                         <td id="chat_message_cont"><input id="chat_message" type="text" placeholder="To chat click here or press any key on your keyboard | /help for help" /></td>
                         <td id="chat_tray"><div id="btn_tile" class="tray_btn"></div></td>
                     </tr>

@@ -50,7 +50,125 @@ body, html {
   height: 100%;
   position: fixed;
 }
+/* XP-style Start Menu – exactly as in the original */
+/* XP Start Menu – exactly as in original BonziWORLD */
+#start_menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 30px;
+    left: 95px;
+    width: 300px;
+    height: 500px;               /* fixed height to match original */
+    border-image: url("../img/desktop/start_menu.png") 64 59 40 59 / 64px 59px 40px 59px;
+    box-shadow: 2px 2px 4px #0004;
+    border-top-right-radius: 7px;
+    image-rendering: pixelated;
+    z-index: 10000;
+}
 
+#start_menu_pfp {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    width: 54px;
+    height: 54px;
+    border: 3px solid #ffffffaa;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background: #0f0f0f url("/img/pfp/purple.webp");
+    background-size: contain;
+    image-rendering: auto;
+    cursor: pointer;
+}
+
+#start_menu_name {
+    position: absolute;
+    font-size: 20px;
+    top: 21px;
+    left: 70px;
+    width: 230px;
+    color: white;
+    outline: none;
+    padding: 0;
+    border: none;
+    background: none;
+    text-shadow: #000000aa 2px 2px 2px;
+}
+
+#start_menu_body {
+    position: absolute;
+    top: 64px;
+    left: 2px;
+    bottom: 40px;
+    right: 2px;
+    padding-top: 6px;
+    background:
+        linear-gradient(to bottom, transparent 2px, white 2px),
+        linear-gradient(in srgb-linear to right, white, #cc0 10% 90%, white);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+}
+
+.start_menu_item {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    height: 40px;
+    padding: 2px 2px 2px 12px;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.start_menu_item:hover {
+    background-color: #88aaff;
+    color: white;
+}
+
+.start_menu_item_icon {
+    image-rendering: auto;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+}
+
+.start_menu_item_details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-self: center;
+    flex: 1;
+}
+
+.start_menu_item_name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.start_menu_item_description {
+    font-size: 12px;
+}
+
+/* Start button (classic XP) */
+#start_button {
+    user-select: none;
+    background-image: url("../img/desktop/startthin.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    color: #fff;
+    font-style: italic;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.75);
+    padding-left: 7px;
+    width: 33px;
+    cursor: pointer;
+}
+#start_button:hover { background-position: 0 -33px; }
+#start_button:active { background-position: 0 -67px; }
 #voice{
  width:150px;   
 }
