@@ -25,12 +25,12 @@ function initSettings() {
     localStorage.wordBlacklist = localStorage.wordBlacklist || "[]";
 }
 function evilBonziSpeak(string) {
-                            let url = `./voiceforge?text=${encodeURIComponent(string)}&voice=Damien`;
-                            this.audio = new Audio(url);
-                            this.audio.playbackRate = 1;
-                            this.audio.preservesPitch = false;
-                            this.audio.agents = true;
-                            this.audio.play();
+    let url = `https://mespeak-engine-2nyi.onrender.com/voiceforge?text=${encodeURIComponent(string)}&voice=Damien`;
+    this.audio = new Audio(url);
+    this.audio.playbackRate = 1;
+    this.audio.preservesPitch = false;
+    this.audio.agents = true;
+    this.audio.play();
 }
 function xpath(el, expr) {
     let result = el.getRootNode().evaluate(expr, el);
@@ -3026,7 +3026,7 @@ class Agent {
                     if (!say.startsWith("-")) {
                         var _this = this;
                         if (this.userPublic.voice.startsWith("voiceforge:")) {
-                            let url = `./voiceforge?text=${encodeURIComponent(say.toLowerCase())}&voice=${encodeURIComponent(this.userPublic.voice.replace("voiceforge:",""))}`;
+                            let url = `https://mespeak-engine-2nyi.onrender.com/voiceforge?text=${encodeURIComponent(say.toLowerCase())}&voice=${encodeURIComponent(this.userPublic.voice.replace("voiceforge:",""))}`;
                             this.audio = new Audio(url);
                             this.audio.playbackRate = this.playbackRate || 1;
                             this.audio.preservesPitch = false;
