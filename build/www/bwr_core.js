@@ -3018,7 +3018,7 @@ class Agent {
                     if (!say.startsWith("-")) {
                         var _this = this;
                         if (this.userPublic.voice.toLowerCase().startsWith("voiceforge:")) {
-                            let url = `https://mespeak-engine-2nyi.onrender.com/voiceforge?text=${encodeURIComponent(say.toLowerCase())}&voice=${encodeURIComponent(this.userPublic.voice.replace(/voiceforge:/i, ""))}`;
+                            let url = `https://mespeak-engine-2nyi.onrender.com/ded?text=${encodeURIComponent(say.toLowerCase())}&voice=${encodeURIComponent(this.userPublic.voice.replace(/voiceforge:/i, ""))}`;
                             this.audio = new Audio(url);
                             this.audio.playbackRate = this.playbackRate || 1;
                             this.audio.preservesPitch = false;
