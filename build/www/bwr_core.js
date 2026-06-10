@@ -9912,6 +9912,7 @@ $(window).load(function () {
         $("#chat_log").hide();
     });
     // Start menu toggle
+// ========== START MENU (ONLY ONCE) ==========
 const startButton = document.getElementById("start_button");
 const startMenu = document.getElementById("start_menu");
 
@@ -9927,24 +9928,85 @@ if (startButton && startMenu) {
             startMenu.hidden = true;
         }
     });
+}
 
-    // Settings item
-    const settingsItem = document.getElementById("settings_button");
-    if (settingsItem) {
-        settingsItem.addEventListener("click", () => {
-            startMenu.hidden = true;
-            openSettings();      // already defined in the second codebase
-        });
-    }
+// Update name & PFP when local agent data changes
+function updateStartMenu() {
+    if (!window.bonzi_guid) return;
+    const agent = agents[window.bonzi_guid];
+    if (!agent) return;
 
-    // Help item
-    const helpItem = document.getElementById("help_button");
-    if (helpItem) {
-        helpItem.addEventListener("click", () => {
-            startMenu.hidden = true;
-            helpPopup();         // already defined (shows README)
-        });
+    const name = agent.userPublic.name;
+    const color = agent.userPublic.color;
+
+    const nameInput = document.getElementById("start_menu_name");
+    if (nameInput) nameInput.value = name;
+
+    const pfp = document.getElementById("start_menu_pfp");
+    if (pfp) {
+        const parts = color.split(" ");
+        const base = parts[0];
+        const hats = parts.slice(1);
+        let bgImgs = [];
+        if (base.startsWith("http")) {
+            bgImgs.push(`url("${base}")`);
+        } else {
+            bgImgs.push(`url("/img/pfp/${base}.png")`);
+        }
+        hats.forEach(hat => bgImgs.push(`url("/img/pfp/${hat}.png")`));
+        pfp.style.backgroundImage = bgImgs.reverse().join(", ");
     }
+}
+
+// Hook into agent updates
+if (typeof AgentHandler !== "undefined") {
+    const originalCheck = AgentHandler.agentsCheck;
+    AgentHandler.agentsCheck = function() {
+        originalCheck.apply(this, arguments);
+        updateStartMenu();
+    };
+}
+
+// Listen to server updates for your own agent
+if (typeof socket !== "undefined") {
+    socket.on("update", (data) => {
+        if (data.guid === window.bonzi_guid) updateStartMenu();
+    });
+    socket.on("room", () => updateStartMenu());
+}
+
+// Name editing (send /name command)
+const nameField = document.getElementById("start_menu_name");
+if (nameField) {
+    nameField.addEventListener("keyup", (e) => {
+        if (e.key === "Enter") {
+            const newName = nameField.value.trim();
+            if (newName) socket.emit("command", { list: ["name", newName] });
+            startMenu.hidden = true;
+        }
+    });
+    nameField.addEventListener("blur", () => {
+        const newName = nameField.value.trim();
+        if (newName) socket.emit("command", { list: ["name", newName] });
+    });
+}
+
+// Settings button
+const settingsItem = document.getElementById("settings_button");
+if (settingsItem) {
+    settingsItem.addEventListener("click", () => {
+        startMenu.hidden = true;
+        openSettings();
+    });
+}
+
+// Help button
+const helpItem = document.getElementById("help_button");
+if (helpItem) {
+    helpItem.addEventListener("click", () => {
+        startMenu.hidden = true;
+        helpPopup();
+    });
 }
     window.onresize = () => {
         for (const id in agents) {
