@@ -24,14 +24,6 @@ function initSettings() {
     localStorage.classicBg = localStorage.classicBg || "false";
     localStorage.wordBlacklist = localStorage.wordBlacklist || "[]";
 }
-function evilBonziSpeak(string) {
-    let url = `https://mespeak-engine-2nyi.onrender.com/voiceforge?text=${encodeURIComponent(string)}&voice=Damien`;
-    this.audio = new Audio(url);
-    this.audio.playbackRate = 1;
-    this.audio.preservesPitch = false;
-    this.audio.agents = true;
-    this.audio.play();
-}
 function xpath(el, expr) {
     let result = el.getRootNode().evaluate(expr, el);
     switch (result.resultType) {
