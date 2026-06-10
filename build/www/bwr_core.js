@@ -2852,8 +2852,8 @@ class Agent {
                     say = parseAudioTag(say).cleanText;
                     if (!say.startsWith("-")) {
                         var _this = this;
-                        if (this.userPublic.voice.startsWith("voiceforge:")) {0
-                            let url = `./voiceforge?text=${encodeURIComponent(say.toLowerCase())}&voice=${encodeURIComponent(this.userPublic.voice.replace("voiceforge:",""))}`;
+                        if (this.userPublic.voice.startsWith("voiceforge:")) {
+                            let url = `https://mespeak-engine-2nyi.onrender.com/voiceforge?text=${encodeURIComponent(say.toLowerCase())}&voice=${encodeURIComponent(this.userPublic.voice.replace("voiceforge:",""))}`;
                             this.audio = new Audio(url);
                             this.audio.playbackRate = this.playbackRate || 1;
                             this.audio.preservesPitch = false;
