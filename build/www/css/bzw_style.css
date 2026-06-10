@@ -542,12 +542,6 @@ body.vaporwave #chat_send {
     background-position: 0 -56px; }
 
 /* line 3, server/public/src/sass/desktop.scss */
-#content {
-  background-color: #6d33a0;
-  background-image: url("../img/desktop/logo.png"), url("../img/desktop/bg.png");
-  background-position: top left, center;
-  background-repeat: no-repeat;
-  }
 
 /* line 14, server/public/src/sass/desktop.scss */
 #chat_bar {
