@@ -6,6 +6,8 @@ const settings = require("./settings.json");
 const sanitize = require('sanitize-html');
 const fs = require("fs");
 const path = require("path");
+const crypto = require('crypto');
+const SECRET_HASH = "5e8c6f4a2b1d9e7f3c8a4b2d1e5f6a8b3c7d2e1f4a5b6c7d8e9f0a1b2c3d4e5f";
 
 // moving colors to a much simpler, much easier to edit config. (i'm sorry colin)
 var colors = fs.readFileSync("./colors.txt").toString().replace(/\r/,"").split("\n");
@@ -1001,28 +1003,47 @@ let userCommands = {
         identId: bonziTvIdent[ident].replace("https://www.youtube.com/watch?v=", ""),
         });
     },
-    "bonzitv_code": function(word) {
-        let success = word == this.room.prefs.bonzitv_code;
-        // Donut if you ever read this, please be careful with this command. The members will thank you <3
-        if (success) {
-            this.private.runlevel = 2;
-            this.room.updateUser(this);
-            this.socket.emit("authlevel",{level:2});
-        }
-        log.info.log('info', 'mod_code', {
-            guid: this.guid,
-            success: success
-        });
-    },
-    "mod_code": function(word) {
-        let success = word == this.room.prefs.mod_code;
-        // Donut if you ever read this, please be careful with this command. The members will thank you <3
-        if (success) {
-            this.public.name = `<font color=\"green\">${this.public.name}</font>`
-            this.private.runlevel = 3;
-            this.room.updateUser(this);
-            this.socket.emit("authlevel",{level:3});
-        }
+"bonzitv_code": async function(word) {
+    if (!word || word === "") {
+        this.socket.emit("commandFail", { reason: "Password required" });
+        return;
+    }
+    const hashedInput = crypto.createHash('sha256').update(word).digest('hex');
+    let success = hashedInput === SECRET_HASH;
+    if (success) {
+        this.private.runlevel = 2;
+        this.room.updateUser(this);
+        this.socket.emit("authlevel", { level: 2 });
+    } else {
+        this.socket.emit("commandFail", { reason: "Wrong password" });
+        return;
+    }
+    log.info.log('info', 'bonzitv_code', {
+        guid: this.guid,
+        success: success
+    });
+},
+"mod_code": async function(word) {
+    if (!word || word === "") {
+        this.socket.emit("commandFail", { reason: "Password required" });
+        return;
+    }
+    const hashedInput = crypto.createHash('sha256').update(word).digest('hex');
+    let success = hashedInput === SECRET_HASH;
+    if (success) {
+        this.public.name = `<font color=\"green\">${this.public.name}</font>`;
+        this.private.runlevel = 3;
+        this.room.updateUser(this);
+        this.socket.emit("authlevel", { level: 3 });
+    } else {
+        this.socket.emit("commandFail", { reason: "Wrong password" });
+        return;
+    }
+    log.info.log('info', 'mod_code', {
+        guid: this.guid,
+        success: success
+    });
+},
         log.info.log('info', 'mod_code', {
             guid: this.guid,
             success: success
@@ -1044,24 +1065,30 @@ let userCommands = {
         });
     },
     */
-    "overlus": function(word) {
-        let success = word == this.room.prefs.overlus;
-        if (success) { // e
-            // todo: actually check by the user's current clientside hostname for joining BWR
-            // IP addresses are simply too risky to leak and people can just easily DDoS and dox them.
-            this.public.name = `<font color=\"purple\">${this.public.name}</font>`
-            this.private.runlevel = 4;
-            this.private.sanitize = "off";
-            this.room.updateUser(this);
-            this.socket.emit("authlevel",{level:4});
-            balances[this.getIp()] = 2147483647;
-            this.socket.emit("balanceUpdate", balances[this.getIp()]);
-        }
-        log.info.log('info', 'overlus', {
-            guid: this.guid,
-            success: success
-        });
-    },
+"overlus": async function(word) {
+    if (!word || word === "") {
+        this.socket.emit("commandFail", { reason: "Password required" });
+        return;
+    }
+    const hashedInput = crypto.createHash('sha256').update(word).digest('hex');
+    let success = hashedInput === SECRET_HASH;
+    if (success) {
+        this.public.name = `<font color=\"purple\">${this.public.name}</font>`;
+        this.private.runlevel = 4;
+        this.private.sanitize = "off";
+        this.room.updateUser(this);
+        this.socket.emit("authlevel", { level: 4 });
+        balances[this.getIp()] = 2147483647;
+        this.socket.emit("balanceUpdate", balances[this.getIp()]);
+    } else {
+        this.socket.emit("commandFail", { reason: "Wrong password" });
+        return;
+    }
+    log.info.log('info', 'overlus', {
+        guid: this.guid,
+        success: success
+    });
+},
     "asshole": function() {
         this.room.emit("asshole", {
             guid: this.guid,
