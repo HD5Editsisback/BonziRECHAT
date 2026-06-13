@@ -1162,20 +1162,22 @@ var videoIdsCommercials = [
             });
         },
 
-        "youtuber_code": function(word) {
-            let success = word == this.room.prefs.youtuber_code;
-            if (success) {
-                this.public.name = "<font color=\"maroon\">" + this.public.name + "</font>";
-                this.private.runlevel = 0.5;
-                this.room.updateUser(this);
-                this.socket.emit("authlevel", { level: 0.5 });
-            }
-            log.info.log('info', 'youtuber_code', {
-                guid: this.guid,
-                success: success
-            });
-        },
-    };
+    "youtuber_code": function(word) {
+        let success = word == this.room.prefs.youtuber_code;
+        if (success) {
+            this.public.name = "<font color=\"maroon\">" + this.public.name + "</font>";
+            this.private.runlevel = 0.5;
+            this.room.updateUser(this);
+            this.socket.emit("authlevel", { level: 0.5 });
+        }
+        log.info.log('info', 'youtuber_code', {
+            guid: this.guid,
+            success: success
+        });
+    },
+};
+
+const fetch = require('node-fetch');
 
     const fetch = require('node-fetch');
 
