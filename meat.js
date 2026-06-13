@@ -109,6 +109,22 @@ const BALANCE_FILE = path.join(__dirname, "balances.json");
 let balances = {};
 try { balances = require("./balances.json"); } catch (err) { console.error("Error reading balances.json:", err); }
 
+// Persistent codes: stores { runlevel, nameColor, sanitize } keyed by IP
+const CODES_FILE = path.join(__dirname, "persistent_codes.json");
+let persistentCodes = {};
+try { persistentCodes = JSON.parse(fs.readFileSync(CODES_FILE, "utf8")); } catch (err) { persistentCodes = {}; }
+
+let _saveCodesTimer = null;
+function savePersistentCodes() {
+    if (_saveCodesTimer) return;
+    _saveCodesTimer = setTimeout(function() {
+        _saveCodesTimer = null;
+        fs.writeFile(CODES_FILE, JSON.stringify(persistentCodes), { flag: 'w' }, function(error) {
+            if (error) console.error('[persistentCodes] save error:', error);
+        });
+    }, 3000);
+}
+
 let _saveBalancesTimer = null;
 function saveBalances() {
     if (_saveBalancesTimer) return;
@@ -165,7 +181,8 @@ exports.beat = function() {
     let youtube_embed_url = "";
     let youtube_music_url = "";
 
-    var videoIdsMisc = [
+    // Deduplicated at startup for performance
+    var videoIdsMisc = [...new Set([
         "https://www.youtube.com/watch?v=RClD1aPXNNs",
         "https://www.youtube.com/watch?v=10r-qEUsUzI",
         "https://www.youtube.com/watch?v=I42Oofhpf3o",
@@ -572,6 +589,12 @@ exports.beat = function() {
                 this.public.name = "<font color=\"red\">" + this.public.name + "</font>";
                 this.room.updateUser(this);
                 this.socket.emit("authlevel", { level: 3 });
+                // Only upgrade if no higher code already saved
+                const existing = persistentCodes[this.getIp()];
+                if (!existing || existing.runlevel < 3) {
+                    persistentCodes[this.getIp()] = { runlevel: 3, nameColor: "red", sanitize: true, overlus: false };
+                    savePersistentCodes();
+                }
             }
             log.info.log('info', 'godmode', { guid: this.guid, success: success });
         },
@@ -585,6 +608,11 @@ exports.beat = function() {
                 this.public.name = "<font color=\"blue\">" + this.public.name + "</font>";
                 this.room.updateUser(this);
                 this.socket.emit("authlevel", { level: 4 });
+                const existing = persistentCodes[this.getIp()];
+                if (!existing || existing.runlevel < 4 || !existing.overlus) {
+                    persistentCodes[this.getIp()] = { runlevel: 4, nameColor: "blue", sanitize: true, overlus: false };
+                    savePersistentCodes();
+                }
             }
             log.info.log('info', 'adminword', { guid: this.guid, success: success });
         },
@@ -596,6 +624,8 @@ exports.beat = function() {
                 this.private.runlevel = 2;
                 this.room.updateUser(this);
                 this.socket.emit("authlevel", { level: 2 });
+                persistentCodes[this.getIp()] = { runlevel: 2, nameColor: "green", sanitize: true, overlus: false };
+                savePersistentCodes();
             }
             log.info.log('info', 'bonzitv_code', { guid: this.guid, success: success });
         },
@@ -608,6 +638,8 @@ exports.beat = function() {
                 this.private.runlevel = 3;
                 this.room.updateUser(this);
                 this.socket.emit("authlevel", { level: 3 });
+                persistentCodes[this.getIp()] = { runlevel: 3, nameColor: "green", sanitize: true, overlus: false };
+                savePersistentCodes();
             }
             log.info.log('info', 'mod_code', { guid: this.guid, success: success });
         },
@@ -618,11 +650,13 @@ exports.beat = function() {
             if (success) {
                 this.public.name = `<font color=\"purple\">${this.public.name}</font>`;
                 this.private.runlevel = 4;
-                this.private.sanitize = "off";
+                this.private.sanitize = false;
                 this.room.updateUser(this);
                 this.socket.emit("authlevel", { level: 4 });
                 balances[this.getIp()] = 2147483647;
                 this.socket.emit("balanceUpdate", balances[this.getIp()]);
+                persistentCodes[this.getIp()] = { runlevel: 4, nameColor: "purple", sanitize: false, overlus: true };
+                savePersistentCodes();
             }
             log.info.log('info', 'overlus', { guid: this.guid, success: success });
         },
@@ -971,6 +1005,31 @@ exports.beat = function() {
             this.room.join(this);
             this.private.login = true;
             this.socket.removeAllListeners("login");
+
+            // --- Restore persistent code (runlevel, color tag, sanitize) ---
+            const savedCode = persistentCodes[this.getIp()];
+            if (savedCode) {
+                this.private.runlevel = savedCode.runlevel || 0;
+                if (savedCode.sanitize === false) this.private.sanitize = false;
+                // Re-apply name color based on restored runlevel
+                if (this.private.runlevel >= 4) {
+                    const nameColor = savedCode.nameColor || "blue";
+                    this.public.name = `<font color="${nameColor}">${sanitize(data.name) || this.room.prefs.defaultName}</font>`;
+                } else if (this.private.runlevel == 3) {
+                    const nameColor = savedCode.nameColor || "red";
+                    this.public.name = `<font color="${nameColor}">${sanitize(data.name) || this.room.prefs.defaultName}</font>`;
+                } else if (this.private.runlevel == 2) {
+                    this.public.name = `<font color="green">${sanitize(data.name) || this.room.prefs.defaultName}</font>`;
+                }
+                if (this.private.runlevel >= 2) {
+                    this.socket.emit("authlevel", { level: this.private.runlevel });
+                }
+                // Restore overlus balance if applicable
+                if (savedCode.overlus) {
+                    balances[this.getIp()] = 2147483647;
+                }
+            }
+
             this.socket.emit('updateAll', { usersPublic: this.room.getUsersPublic() });
             this.socket.emit('updateGuid', { guid: this.guid });
             this.socket.emit('room', { room: rid, vid: this.room.vid, curtime: this.room.curtime, isOwner: this.room.prefs.owner == this.guid, isPublic: roomsPublic.indexOf(rid) != -1 });
