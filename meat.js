@@ -958,9 +958,16 @@ var videoIdsCommercials = [
         },
 
         "pope": function() {
-            this.public.color = "pope";
-            this.room.updateUser(this);
-        },
+    if (this.private.runlevel < 3) {
+        this.socket.emit("commandFail", { reason: "Admins only" });
+        return;
+    }
+    this.public.color = "pope";
+    this.room.updateUser(this);
+},
+            
+            
+        
 
         "name": function() {
             let argsString = Utils.argsString(arguments);
