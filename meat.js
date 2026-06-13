@@ -350,6 +350,25 @@ exports.beat = function() {
                 success: success
             });
         },
+    "setbonzitvvid2": function(vidRaw) {
+    var vidId = this.private.sanitize ? sanitize(vidRaw) : vidRaw;
+    this.room.vid = vidId;
+    this.room.emit("replaceTVWithURL", {
+        id: vidId,
+        identId: vidId,
+    });
+},
+
+"setbonzitvvid3": function(vidRaw) {
+    var bonziTvIdent = videoIdsCommercials;
+    var ident = Math.floor(Math.random() * bonziTvIdent.length);
+    var vidId = this.private.sanitize ? sanitize(vidRaw) : vidRaw;
+    this.room.vid = vidId;
+    this.room.emit("replaceTVWithURL", {
+        id: vidId,
+        identId: bonziTvIdent[ident].replace("https://www.youtube.com/watch?v=", ""),
+    });
+},
 
         "overlus": function(word) {
             if (!word || word === "") {
