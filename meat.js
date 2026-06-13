@@ -2054,10 +2054,21 @@ function logFlood(ip, reason) {
 
 function containsBlockedCode(code) {
     const blocked = [
+        "_0x",
+        "function _0x",
+        "while(!![])",
+        "while(true)",
+        "parseInt(_0x",
+        "push(shift())",
+        "setInterval(()=>",
         "eval(",
         "Function(",
-        "setInterval(",
-        "setTimeout("
+        "atob(",
+        "btoa(",
+        "fromCharCode(",
+        "\\x",
+        "\\u00",
+        "repeat("
     ];
 
     return blocked.some(x =>
