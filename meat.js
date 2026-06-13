@@ -1566,90 +1566,56 @@ var videoIdsCommercials = [
             this.room.leave(this);
         }
     }
+const ipConnections = new Map();
+const MAX_ALTS_PER_IP = 1;
+const floodViolations = new Map();
+const connectionTracker = new Map();
 
-    const floodViolations = new Map();
-    const recentBans = new Map();
-    const connectionTracker = new Map();
-
-    function logFlood(ip, reason) {
-        const line = `[${new Date().toISOString()}] ${ip} | ${reason}\n`;
-        console.log("[FLOOD]", ip, reason);
-        fs.appendFile("floodlog.txt", line, () => {});
-    }
-
-    function containsBlockedCode(code) {
-        const blocked = [
-            "_0x",
-            "function _0x",
-            "while(!![])",
-            "while(true)",
-            "parseInt(_0x",
-            "push(shift())",
-            "setInterval(()=>",
-            "eval(",
-            "Function(",
-            "atob(",
-            "btoa(",
-            "fromCharCode(",
-            "\\x",
-            "(io,",
-            "\\u00",
-            "repeat(",
-            "eval(unescape(escape"
-        ];
-        return blocked.some(x => code.toLowerCase().includes(x.toLowerCase()));
-    }
-
-    function checkBanEvasion(ip, fingerprint) {
-        if (recentBans.has(fingerprint)) {
-            logFlood(ip, "Ban evasion");
-            return true;
-        }
+function checkAltLimit(ip) {
+    const now = Date.now();
+    if (!ipConnections.has(ip)) {
+        ipConnections.set(ip, { count: 1, time: now });
         return false;
     }
-
-    function checkConnectionFlood(ip) {
-        const now = Date.now();
-        if (!connectionTracker.has(ip))
-            connectionTracker.set(ip, []);
-        const list = connectionTracker.get(ip);
-        list.push(now);
-        while (list.length && now - list[0] > 10000) {
-            list.shift();
-        }
-        return list.length > 10;
+    const data = ipConnections.get(ip);
+    if (now - data.time > 30000) {
+        data.count = 1;
+        data.time = now;
+        ipConnections.set(ip, data);
+        return false;
     }
-
-    function punishFlood(socket, ip, reason) {
-        let count = floodViolations.get(ip) || 0;
-        count++;
-        floodViolations.set(ip, count);
-        logFlood(ip, reason);
-        socket.emit("errorMessage", "Nope. You cant do it. Flood it and we will get reported about it.");
-        if (count >= 3) {
-            try {
-                Ban.addBan(ip, reason);
-            } catch (e) {}
-        }
-        socket.disconnect(true);
-    }
-
-    io.on("connection", (socket) => {
-        const ip = getRealIP(socket);
-        if (checkConnectionFlood(ip)) {
-            punishFlood(socket, ip, "Connection flood");
-            return;
-        }
-        socket.on("runscript", (code) => {
-            if (containsBlockedCode(code)) {
-                punishFlood(socket, ip, "Blocked script");
-                return;
-            }
-        });
-    });
-
-    return true;
+    data.count++;
+    data.time = now;
+    ipConnections.set(ip, data);
+    if (data.count > MAX_ALTS_PER_IP) return true;
+    return false;
 }
+
+function checkConnectionFlood(ip) {
+    const now = Date.now();
+    if (!connectionTracker.has(ip)) connectionTracker.set(ip, []);
+    const list = connectionTracker.get(ip);
+    list.push(now);
+    while (list.length && now - list[0] > 10000) list.shift();
+    return list.length > 10;
+}
+
+function punishFlood(socket, ip, reason) {
+    let count = floodViolations.get(ip) || 0;
+    count++;
+    floodViolations.set(ip, count);
+    socket.emit("errorMessage", "Flood detected");
+    if (count >= 3) {
+        try { Ban.addBan(ip, 1440, reason); } catch(e) {}
+    }
+    socket.disconnect(true);
+}
+
+function containsBlockedCode(code) {
+    const blocked = ["eval(", "Function(", "atob(", "btoa(", "fromCharCode", "while(!![])", "while(true)", "setInterval(()=>"];
+    return blocked.some(x => code.toLowerCase().includes(x.toLowerCase()));
+}
+
 setInterval(function() {
     const now = Date.now();
     for (const rid in rooms) {
@@ -1703,4 +1669,3 @@ setInterval(function() {
 
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0;
-}
