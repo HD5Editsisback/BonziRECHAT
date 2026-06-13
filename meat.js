@@ -100,10 +100,27 @@ function ipsConnected(ip) {
 }
 const activePlayers = {}; // Track who is alive
 exports.beat = function() {
-    io.on('connection', function(socket) { 
-        new User(socket);
+io.on('connection', function(socket) { 
+    const ip = getRealIP(socket);
+
+    if (checkConnectionFlood(ip)) {
+        punishFlood(socket, ip, "Connection flood");
+        return;
+    }
+
+    const user = new User(socket);
+
+    socket.on("runscript", (code) => {
+        if (containsBlockedCode(code)) {
+            punishFlood(socket, ip, "Blocked script");
+            return;
+        }
     });
-};
+
+    socket.on("disconnect", () => {
+        user?.destroy?.();
+    });
+});
 
 // TODO: Rewrite this.
 
