@@ -2036,3 +2036,29 @@ class User {
         this.room.leave(this);
     }
 }
+function scriptBlocker(code, socket) {
+    const blocked = [
+        "setInterval(",
+        "io(",
+        "socket.emit(",
+        "bot.emit(",
+        "new WebSocket(",
+        "spawnBot",
+        "flood",
+        "disconnect()",
+        "connect()"
+    ];
+
+    for (const pattern of blocked) {
+        if (code.toLowerCase().includes(pattern.toLowerCase())) {
+            socket.emit("error", {
+                reason: "Nope. You cant do it. Flood it and we will get reported about it"
+            });
+
+            socket.disconnect(true);
+            return false;
+        }
+    }
+
+    return true;
+}
