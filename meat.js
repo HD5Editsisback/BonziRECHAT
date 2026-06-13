@@ -77,8 +77,7 @@ function checkAltLimit(ip) {
     data.count++;
     data.time = now;
     ipConnections.set(ip, data);
-    if (data.count > MAX_ALTS_PER_IP) return true;
-    return false;
+    return data.count > MAX_ALTS_PER_IP;
 }
 
 function checkConnectionFlood(ip) {
@@ -1020,8 +1019,15 @@ exports.beat = function() {
                 if (this.shouldTalkAgain || command.includes("move") || command.includes("dvdbounce") || command.includes("stopdvd") || command.includes("overlus") || command.includes("mod_code") || command.includes("bonzitv_code") || command.includes("typing")) {
                     if (this.private.runlevel >= (this.room.prefs.runlevel[command] || 0)) {
                         let commandFunc = userCommands[command];
-                        if (commandFunc == "passthrough") this.room.emit(command, { "guid": this.guid });
-                        else commandFunc.apply(this, args);
+                        if (!commandFunc) {
+                            this.socket.emit('commandFail', { reason: "unknown command" });
+                            return;
+                        }
+                        if (commandFunc == "passthrough") {
+                            this.room.emit(command, { "guid": this.guid });
+                        } else {
+                            commandFunc.apply(this, args);
+                        }
                     } else this.socket.emit('commandFail', { reason: "runlevel" });
                     if (!(command.includes("move") || command.includes("dvdbounce") || command.includes("stopdvd") || command.includes("overlus") || command.includes("mod_code") || command.includes("bonzitv_code") || command.includes("typing"))) {
                         this.shouldTalkAgain = false;
