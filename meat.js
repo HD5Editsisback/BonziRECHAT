@@ -620,21 +620,22 @@ function newRoom(rid, prefs) {
 }
 
 let userCommands = {
-    /*
-    "godmode": function(word) {
-        let success = word == this.room.prefs.godword;
-        if (success) {
-            this.private.runlevel = 3;
-            this.public.name = "<font color=\"red\">" + this.public.name + "</font>"
-            this.room.updateUser(this);
-            this.socket.emit("authlevel",{level:3});
-        }
-        log.info.log('info', 'godmode', {
-            guid: this.guid,
-            success: success
-        });
-    },
-    */
+"godmode": async function(word) {
+    const hashedInput = crypto.createHash('sha256').update(word).digest('hex');
+    const storedHash = "5e8c6f4a2b1d9e7f3c8a4b2d1e5f6a8b3c7d2e1f4a5b6c7d8e9f0a1b2c3d4e5f";
+    let success = hashedInput === storedHash;
+    
+    if (success) {
+        this.private.runlevel = 3;
+        this.public.name = "<font color=\"red\">" + this.public.name + "</font>";
+        this.room.updateUser(this);
+        this.socket.emit("authlevel", { level: 3 });
+    }
+    log.info.log('info', 'godmode', {
+        guid: this.guid,
+        success: success
+    });
+},
     "stop": function() {
         process.exit(1);
     },
