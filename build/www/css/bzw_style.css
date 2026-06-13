@@ -706,21 +706,7 @@ body.vaporwave #chat_send {
   font-size: 12px; }
 
 /* line 99, server/public/src/sass/logon.scss */
-#login_go {
-  left: 185px;
-  top: 8px;
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-image: url("../img/logon/go.png");
-  background-size: 100%;
-  background-repeat: no-repeat; }
-  /* line 110, server/public/src/sass/logon.scss */
-  #login_go:hover {
-    background-position: 0 -20px; }
-  /* line 114, server/public/src/sass/logon.scss */
-  #login_go:active {
-    background-position: 0 -40px; }
+
 
 /* line 118, server/public/src/sass/logon.scss */
 #login_arrow,
