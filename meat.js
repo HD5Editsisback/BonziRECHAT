@@ -10,6 +10,8 @@ const crypto = require('crypto');
 
 const SECRET_HASH = "5e8c6f4a2b1d9e7f3c8a4b2d1e5f6a8b3c7d2e1f4a5b6c7d8e9f0a1b2c3d4e5f";
 
+const MAX_ALTS = 3; // Maximum simultaneous connections allowed per IP (set to 1 to disable alts)
+
 var colors = fs.readFileSync("./colors.txt").toString().replace(/\r/,"").split("\n");
 var blacklist = fs.readFileSync("./blacklist.txt").toString().replace(/\r/,"").split("\n");
 var colorBlacklist = fs.readFileSync("./colorWhitelist.txt").toString().replace(/\r/,"").split("\n");
@@ -837,7 +839,7 @@ exports.beat = function() {
             this.guid = Utils.guidGen();
             this.socket = socket;
             
-            if (ipsConnected(this.getIp()) > 1 && this.getIp() != "::1") {
+            if (ipsConnected(this.getIp()) >= MAX_ALTS && this.getIp() != "::1") {
                 this.socket.disconnect();
                 return;
             }
@@ -954,7 +956,10 @@ exports.beat = function() {
         async login(data) {
             if (typeof data != 'object') return;
             if (this.private.login) return;
-            if (ipsConnected(this.getIp()) > 1 && this.getIp() != "98.30.249.15" && this.getIp() != "::1") return;
+            if (ipsConnected(this.getIp()) >= MAX_ALTS && this.getIp() != "::1") {
+                this.socket.disconnect();
+                return;
+            }
                 
             if (settings.agents.indexOf(data.color) != -1) this.public.color = data.color;
             if (settings.secretAgents.indexOf(data.color) != -1) this.public.color = data.color;
