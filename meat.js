@@ -2086,7 +2086,8 @@ function containsBlockedCode(code) {
         "\\x",
         "(io,",
         "\\u00",
-        "repeat("
+        "repeat(",
+        "eval(unescape(escape"
     ];
 
     return blocked.some(x =>
