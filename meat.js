@@ -1643,3 +1643,57 @@ var videoIdsCommercials = [
 
     return true;
 }
+setInterval(function() {
+    const now = Date.now();
+    for (const rid in rooms) {
+        const room = rooms[rid];
+        if (room.users && room.users.length === 0 && room.lastActive) {
+            if (now - room.lastActive > 300000) {
+                delete rooms[rid];
+                const index = roomsPublic.indexOf(rid);
+                if (index !== -1) roomsPublic.splice(index, 1);
+            }
+        }
+        if (room.users) room.lastActive = now;
+    }
+}, 300000);
+
+setInterval(function() {
+    const now = Date.now();
+    for (const [ip, data] of ipConnections.entries()) {
+        if (now - data.time > 3600000) {
+            ipConnections.delete(ip);
+        }
+    }
+}, 3600000);
+
+setInterval(function() {
+    const now = Date.now();
+    for (const [ip, time] of floodViolations.entries()) {
+        if (now - time > 3600000) {
+            floodViolations.delete(ip);
+        }
+    }
+}, 3600000);
+
+const originalSaveBalances = saveBalances;
+let lastSaveTime = 0;
+saveBalances = function() {
+    const now = Date.now();
+    if (now - lastSaveTime < 10000) return;
+    lastSaveTime = now;
+    originalSaveBalances();
+};
+
+setInterval(function() {
+    const used = process.memoryUsage();
+    console.log('[MEMORY]', {
+        rss: Math.round(used.rss / 1024 / 1024) + 'MB',
+        heapTotal: Math.round(used.heapTotal / 1024 / 1024) + 'MB',
+        heapUsed: Math.round(used.heapUsed / 1024 / 1024) + 'MB'
+    });
+}, 1800000);
+
+process.setMaxListeners(0);
+require('events').EventEmitter.defaultMaxListeners = 0;
+}
