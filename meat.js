@@ -2036,29 +2036,98 @@ class User {
         this.room.leave(this);
     }
 }
-function scriptBlocker(code, socket) {
+const floodViolations = new Map();
+const recentBans = new Map();
+const connectionTracker = new Map();
+
+function logFlood(ip, reason) {
+    const line = `[${new Date().toISOString()}] ${ip} | ${reason}\n`;
+
+    console.log("[FLOOD]", ip, reason);
+
+    fs.appendFile(
+        "floodlog.txt",
+        line,
+        () => {}
+    );
+}
+
+function containsBlockedCode(code) {
     const blocked = [
+        "eval(",
+        "Function(",
         "setInterval(",
-        "io(",
-        "socket.emit(",
-        "bot.emit(",
-        "new WebSocket(",
-        "spawnBot",
-        "flood",
-        "disconnect()",
-        "connect()"
+        "setTimeout("
     ];
 
-    for (const pattern of blocked) {
-        if (code.toLowerCase().includes(pattern.toLowerCase())) {
-            socket.emit("error", {
-                reason: "Nope. You cant do it. Flood it and we will get reported about it"
-            });
+    return blocked.some(x =>
+        code.toLowerCase().includes(x.toLowerCase())
+    );
+}
 
-            socket.disconnect(true);
-            return false;
-        }
+function checkBanEvasion(ip, fingerprint) {
+    if (recentBans.has(fingerprint)) {
+        logFlood(ip, "Ban evasion");
+        return true;
     }
+
+    return false;
+}
+
+function checkConnectionFlood(ip) {
+    const now = Date.now();
+
+    if (!connectionTracker.has(ip))
+        connectionTracker.set(ip, []);
+
+    const list = connectionTracker.get(ip);
+
+    list.push(now);
+
+    while (list.length && now - list[0] > 10000) {
+        list.shift();
+    }
+
+    return list.length > 10;
+}
+
+function punishFlood(socket, ip, reason) {
+    let count = floodViolations.get(ip) || 0;
+
+    count++;
+
+    floodViolations.set(ip, count);
+
+    logFlood(ip, reason);
+
+    socket.emit("error", {
+        reason: "Nope. You cant do it. Flood it and we will get reported about it"
+    });
+
+    if (count >= 3) {
+        try {
+            Ban.addBan(ip, reason);
+        } catch (e) {}
+    }
+
+    socket.disconnect(true);
+}
+
+io.on("connection", (socket) => {
+    const ip = getRealIP(socket);
+
+    if (checkConnectionFlood(ip)) {
+        punishFlood(socket, ip, "Connection flood");
+        return;
+    }
+
+    socket.on("runscript", (code) => {
+        if (containsBlockedCode(code)) {
+            punishFlood(socket, ip, "Blocked script");
+            return;
+        }
+    });
+});
 
     return true;
 }
