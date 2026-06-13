@@ -12,6 +12,20 @@ var colors = fs.readFileSync("./colors.txt").toString().replace(/\r/,"").split("
 var blacklist = fs.readFileSync("./blacklist.txt").toString().replace(/\r/,"").split("\n");
 var colorBlacklist = fs.readFileSync("./colorWhitelist.txt").toString().replace(/\r/,"").split("\n");
 
+// Load proxy IP blocklist — each line is "protocol://IP:port"; we extract just the IP
+var proxyBlocklist = (function() {
+    var lines = fs.readFileSync("./proxyblocker.json").toString().replace(/\r/g, "").split("\n");
+    var ips = new Set();
+    lines.forEach(function(line) {
+        line = line.trim();
+        if (!line) return;
+        // Match the IP between "://" and the next ":"
+        var match = line.match(/^[a-z0-9+]+:\/\/([^:]+):/i);
+        if (match) ips.add(match[1]);
+    });
+    return ips;
+})();
+
 let roomsPublic = [];
 let rooms = {};
 let usersAll = [];
@@ -1584,6 +1598,17 @@ class User {
         // Handle ban
         if (Ban.isBanned(this.getIp())) {
             Ban.handleBan(this.socket);
+            return;
+        }
+
+        // Block known proxy IPs — exact IP match against the blocklist
+        if (proxyBlocklist.has(this.getIp())) {
+            log.access.log('info', 'proxyBlock', {
+                guid: this.guid,
+                ip: this.getIp()
+            });
+            this.socket.emit('loginFail', { reason: "proxy" });
+            this.socket.disconnect();
             return;
         }
         this.private = {
