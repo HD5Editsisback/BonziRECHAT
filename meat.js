@@ -2112,10 +2112,8 @@ function punishFlood(socket, ip, reason) {
 
     logFlood(ip, reason);
 
-    socket.emit("error", {
-        reason: "Nope. You cant do it. Flood it and we will get reported about it"
-    });
-
+    socket.emit("errorMessage", "Nope. You cant do it. Flood it and we will get reported about it.");
+    
     if (count >= 3) {
         try {
             Ban.addBan(ip, reason);
