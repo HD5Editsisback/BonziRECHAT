@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require('crypto');
 
-const SECRET_HASH = "8e6f8c5da0fa4951f0f7233ff4ce7e1584e32683656c56d8ff2b927820c506f7";
+const SECRET_HASH = "5e8c6f4a2b1d9e7f3c8a4b2d1e5f6a8b3c7d2e1f4a5b6c7d8e9f0a1b2c3d4e5f";
 
 const MAX_ALTS = 3; // Maximum simultaneous connections allowed per IP (set to 1 to disable alts)
 
@@ -1089,17 +1089,13 @@ exports.beat = function() {
 
         async updatebonzitv() {
             if (!bonziTvCool) {
-                const date = new Date();
-                const hours = date.getHours();
-                const minutes = date.getMinutes();
-                var bonziTvIdent = videoIdsCommercials;
-                var ident = Math.floor(Math.random() * bonziTvIdent.length);
-                var num = Math.floor(Math.random() * videoIdsCommercials.length);
-                var vid = videoIdsMisc[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
+                var miscNum = Math.floor(Math.random() * videoIdsMisc.length);
+                var commNum = Math.floor(Math.random() * videoIdsCommercials.length);
+                var vid = videoIdsMisc[miscNum].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
                 this.room.vid = vid;
                 this.room.emit("replaceTVWithURL", {
-                    id: videoIdsMisc[Math.floor(Math.random() * videoIdsMisc.length)].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", ""),
-                    identId: videoIdsCommercials[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", ""),
+                    id: vid,
+                    identId: videoIdsCommercials[commNum].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", ""),
                 });
                 bonziTvCool = true;
                 setTimeout(function() {
