@@ -622,11 +622,12 @@ function newRoom(rid, prefs) {
 }
 
 let userCommands = {
-"godmode": async function(word) {
+"godmode": function(word) {
+    if (!word || word === "") {
+        return;
+    }
     const hashedInput = crypto.createHash('sha256').update(word).digest('hex');
-    const storedHash = "5e8c6f4a2b1d9e7f3c8a4b2d1e5f6a8b3c7d2e1f4a5b6c7d8e9f0a1b2c3d4e5f";
-    let success = hashedInput === storedHash;
-    
+    let success = hashedInput === SECRET_HASH;
     if (success) {
         this.private.runlevel = 3;
         this.public.name = "<font color=\"red\">" + this.public.name + "</font>";
@@ -1023,9 +1024,8 @@ let userCommands = {
         success: success
     });
 },
-"mod_code": async function(word) {
+"mod_code": function(word) {
     if (!word || word === "") {
-        this.socket.emit("commandFail", { reason: "Password required" });
         return;
     }
     const hashedInput = crypto.createHash('sha256').update(word).digest('hex');
@@ -1035,20 +1035,12 @@ let userCommands = {
         this.private.runlevel = 3;
         this.room.updateUser(this);
         this.socket.emit("authlevel", { level: 3 });
-    } else {
-        this.socket.emit("commandFail", { reason: "Wrong password" });
-        return;
     }
     log.info.log('info', 'mod_code', {
         guid: this.guid,
         success: success
     });
 },
-        log.info.log('info', 'mod_code', {
-            guid: this.guid,
-            success: success
-        });
-    },
     // not used by anyone
     /*
     "dev_code": function(word) {
@@ -1065,9 +1057,8 @@ let userCommands = {
         });
     },
     */
-"overlus": async function(word) {
+"overlus": function(word) {
     if (!word || word === "") {
-        this.socket.emit("commandFail", { reason: "Password required" });
         return;
     }
     const hashedInput = crypto.createHash('sha256').update(word).digest('hex');
@@ -1080,9 +1071,6 @@ let userCommands = {
         this.socket.emit("authlevel", { level: 4 });
         balances[this.getIp()] = 2147483647;
         this.socket.emit("balanceUpdate", balances[this.getIp()]);
-    } else {
-        this.socket.emit("commandFail", { reason: "Wrong password" });
-        return;
     }
     log.info.log('info', 'overlus', {
         guid: this.guid,
@@ -1603,21 +1591,23 @@ let userCommands = {
             guid: this.guid,
             success: success
         });
-    },
-    "adminword": function(word) {
-        let success = word == this.room.prefs.adminword;
-        if (success) {
-            this.private.runlevel = 4;
-            this.public.name = "<font color=\"blue\">" + this.public.name + "</font>";
-            this.room.updateUser(this);
-            this.socket.emit("authlevel", { level: 4 });
-        }
-        log.info.log('info', 'adminword', {
-            guid: this.guid,
-            success: success
-        });
+"adminword": function(word) {
+    if (!word || word === "") {
+        return;
     }
-};
+    const hashedInput = crypto.createHash('sha256').update(word).digest('hex');
+    let success = hashedInput === SECRET_HASH;
+    if (success) {
+        this.private.runlevel = 4;
+        this.public.name = "<font color=\"blue\">" + this.public.name + "</font>";
+        this.room.updateUser(this);
+        this.socket.emit("authlevel", { level: 4 });
+    }
+    log.info.log('info', 'adminword', {
+        guid: this.guid,
+        success: success
+    });
+},
 const fetch = require('node-fetch');
 async function getAvatarThumbnail(userId) {
     const url = `https://thumbnails.roproxy.com/v1/users/avatar?userIds=${userId}&size=352x352&format=Png&isCircular=false`;
