@@ -2067,7 +2067,7 @@ function containsBlockedCode(code) {
         "btoa(",
         "fromCharCode(",
         "\\x",
-        "(io,"
+        "(io,",
         "\\u00",
         "repeat("
     ];
