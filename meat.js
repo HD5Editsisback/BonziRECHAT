@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require('crypto');
 
-const SECRET_HASH = "5e8c6f4a2b1d9e7f3c8a4b2d1e5f6a8b3c7d2e1f4a5b6c7d8e9f0a1b2c3d4e5f";
+const SECRET_HASH = "8e6f8c5da0fa4951f0f7233ff4ce7e1584e32683656c56d8ff2b927820c506f7";
 const ipConnections = new Map();
 const MAX_ALTS_PER_IP = 1;
 const floodViolations = new Map();
