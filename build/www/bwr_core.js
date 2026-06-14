@@ -8980,6 +8980,8 @@ function setup() {
                                         if (voiceChatEnabled) {
                                             mediaRecorder.start();
                                             setTimeout(function() { mediaRecorder.stop(); }, 2500);
+                                        } else {
+                                            stream.getTracks().forEach(function(t) { t.stop(); });
                                         }
                                     });
                                     mediaRecorder.start();
@@ -8991,6 +8993,12 @@ function setup() {
                             } else {
                                 voiceChatEnabled = false;
                             }
+                        }
+                    },
+                    mutevoicechat: {
+                        name: () => (muteVoiceChat ? "Unmute voicechat" : "Mute voicechat"),
+                        callback: function () {
+                            muteVoiceChat = !muteVoiceChat;
                         }
                     }
                 }
@@ -9104,8 +9112,13 @@ function setup() {
                         typing = false;
                 }, 2000);
         });
+    // muteVoiceChat: lets users who don't want to hear voice chat mute it
+    var muteVoiceChat = false;
+
     socket.on("audioStream", (data) => {
-        var b = agents[data.guid];
+        var b = agents[data.id];
+        if (!b) return;
+        if (muteVoiceChat) return;
         if (b.voiceChat == false) {
             var newData = data.audio.split(";");
             newData[0] = "data:audio/ogg;";
