@@ -8968,30 +8968,43 @@ function setup() {
                             if (!voiceChatEnabled) {
                                 navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {
                                     voiceChatEnabled = true;
-                                    var mediaRecorder = new MediaRecorder(stream);
-                                    var audioChunks = [];
-                                    mediaRecorder.addEventListener("dataavailable", function(event) {
-                                        audioChunks.push(event.data);
-                                    });
-                                    mediaRecorder.addEventListener("stop", function() {
-                                        var audioBlob = new Blob(audioChunks);
-                                        audioChunks = [];
-                                        var fileReader = new FileReader();
-                                        fileReader.readAsDataURL(audioBlob);
-                                        fileReader.onloadend = function() {
-                                            if (voiceChatEnabled) {
-                                                socket.emit("audioStream", { audio: fileReader.result });
-                                            }
-                                        };
-                                        if (voiceChatEnabled) {
-                                            mediaRecorder.start();
-                                            setTimeout(function() { mediaRecorder.stop(); }, 2500);
-                                        } else {
+
+                                    // Two recorders alternating so there is NEVER a gap
+                                    function makeRecorder() {
+                                        var rec = new MediaRecorder(stream);
+                                        rec.chunks = [];
+                                        rec.addEventListener("dataavailable", function(e) { rec.chunks.push(e.data); });
+                                        rec.addEventListener("stop", function() {
+                                            var blob = new Blob(rec.chunks);
+                                            rec.chunks = [];
+                                            var reader = new FileReader();
+                                            reader.readAsDataURL(blob);
+                                            reader.onloadend = function() {
+                                                if (voiceChatEnabled) socket.emit("audioStream", { audio: reader.result });
+                                            };
+                                        });
+                                        return rec;
+                                    }
+
+                                    var recA = makeRecorder();
+                                    var recB = makeRecorder();
+                                    var CHUNK = 2000;
+
+                                    function flip(active, next) {
+                                        if (!voiceChatEnabled) {
                                             stream.getTracks().forEach(function(t) { t.stop(); });
+                                            return;
                                         }
-                                    });
-                                    mediaRecorder.start();
-                                    setTimeout(function() { mediaRecorder.stop(); }, 2500);
+                                        next.start();
+                                        setTimeout(function() {
+                                            active.stop();
+                                            setTimeout(function() { flip(next, active); }, CHUNK);
+                                        }, CHUNK);
+                                    }
+
+                                    recA.start();
+                                    setTimeout(function() { flip(recA, recB); }, CHUNK);
+
                                 }).catch(function(err) {
                                     alert("Microphone access denied. Please allow microphone permission and try again.");
                                     console.error("Mic error:", err);
@@ -9055,41 +9068,42 @@ function setup() {
     $("#chat_send").click(sendInput);
     $("#voiceChatButton").click(function () {
         voiceChatEnabled = !voiceChatEnabled;
-        if (voiceChatEnabled == true) {
-            navigator.mediaDevices
-                .getUserMedia({ audio: true, video: false })
-                .then((stream) => {
-                    var madiaRecorder = new MediaRecorder(stream);
-                    var audioChunks = [];
-                    madiaRecorder.addEventListener("dataavailable", function (event) {
-                        audioChunks.push(event.data);
-                    });
-                    madiaRecorder.addEventListener("stop", function () {
-                        var audioBlob = new Blob(audioChunks);
-                        audioChunks = [];
-                        var fileReader = new FileReader();
-                        fileReader.readAsDataURL(audioBlob);
-                        fileReader.onloadend = function () {
-                            var base64String = fileReader.result;
-                            if (voiceChatEnabled) {
-                                socket.emit("audioStream", {
-                                    audio: base64String,
-                                });
-                            }
+        if (voiceChatEnabled) {
+            navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {
+                function makeRecorder() {
+                    var rec = new MediaRecorder(stream);
+                    rec.chunks = [];
+                    rec.addEventListener("dataavailable", function(e) { rec.chunks.push(e.data); });
+                    rec.addEventListener("stop", function() {
+                        var blob = new Blob(rec.chunks);
+                        rec.chunks = [];
+                        var reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function() {
+                            if (voiceChatEnabled) socket.emit("audioStream", { audio: reader.result });
                         };
-                        madiaRecorder.start();
-                        setTimeout(function () {
-                            madiaRecorder.stop();
-                        }, 2500);
                     });
-                    madiaRecorder.start();
-                    setTimeout(function () {
-                        madiaRecorder.stop();
-                    }, 2500);
-                })
-                .catch((error) => {
-                    console.error("Error capturing audio.", error);
-                });
+                    return rec;
+                }
+                var recA = makeRecorder();
+                var recB = makeRecorder();
+                var CHUNK = 2000;
+                function flip(active, next) {
+                    if (!voiceChatEnabled) {
+                        stream.getTracks().forEach(function(t) { t.stop(); });
+                        return;
+                    }
+                    next.start();
+                    setTimeout(function() {
+                        active.stop();
+                        setTimeout(function() { flip(next, active); }, CHUNK);
+                    }, CHUNK);
+                }
+                recA.start();
+                setTimeout(function() { flip(recA, recB); }, CHUNK);
+            }).catch(function(error) {
+                console.error("Error capturing audio.", error);
+            });
         }
     });
     $("#chat_message").keypress(function (e) {
