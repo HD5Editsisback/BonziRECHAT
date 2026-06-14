@@ -109,7 +109,6 @@ const BALANCE_FILE = path.join(__dirname, "balances.json");
 let balances = {};
 try { balances = require("./balances.json"); } catch (err) { console.error("Error reading balances.json:", err); }
 
-// Persistent codes: stores { runlevel, nameColor, sanitize } keyed by IP
 const CODES_FILE = path.join(__dirname, "persistent_codes.json");
 let persistentCodes = {};
 try { persistentCodes = JSON.parse(fs.readFileSync(CODES_FILE, "utf8")); } catch (err) { persistentCodes = {}; }
@@ -181,26 +180,7 @@ exports.beat = function() {
     let youtube_embed_url = "";
     let youtube_music_url = "";
 
-    // Deduplicated at startup for performance
     var videoIdsMisc = [...new Set([
-        "https://www.youtube.com/watch?v=RClD1aPXNNs",
-        "https://www.youtube.com/watch?v=10r-qEUsUzI",
-        "https://www.youtube.com/watch?v=I42Oofhpf3o",
-        "https://www.youtube.com/watch?v=w6bKUI_jj4c",
-        "https://www.youtube.com/watch?v=wetOIrkZE7g",
-        "https://www.youtube.com/watch?v=jy-NdRZMqWA",
-        "https://www.youtube.com/watch?v=1tLWJyiQ35M",
-        "https://www.youtube.com/watch?v=PWcYhloCrwQ",
-        "https://www.youtube.com/watch?v=wPrIfIWE16A",
-        "https://www.youtube.com/watch?v=QoXfKyc4RGo",
-        "https://www.youtube.com/watch?v=9yUuejUVikM",
-        "https://www.youtube.com/watch?v=xOMxYKxbSqo",
-        "https://www.youtube.com/watch?v=0jgheGgqrlk",
-        "https://www.youtube.com/watch?v=YQa2-DY7Y_Q",
-        "https://www.youtube.com/watch?v=8LY0o_CgPR",
-        "https://www.youtube.com/watch?v=JfzEO9-Zlhw",
-        "https://www.youtube.com/watch?v=rhkgOXksmaY",
-        "https://www.youtube.com/watch?v=cdmVPHdpECM",
         "https://www.youtube.com/watch?v=RClD1aPXNNs",
         "https://www.youtube.com/watch?v=10r-qEUsUzI",
         "https://www.youtube.com/watch?v=I42Oofhpf3o",
@@ -326,18 +306,6 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=nRYrIBMou9s",
         "https://www.youtube.com/watch?v=j_bt6gR07MA",
         "https://www.youtube.com/watch?v=SJ7LYtkzqQg",
-        "https://www.youtube.com/watch?v=xHI-iKm31us",
-        "https://www.youtube.com/watch?v=6vGgsXO57bs",
-        "https://www.youtube.com/watch?v=Ze1p7bYXw0g",
-        "https://www.youtube.com/watch?v=g0wCF04ddnw",
-        "https://www.youtube.com/watch?v=ylVsfdU5pxo",
-        "https://www.youtube.com/watch?v=Eg5Ja23HfhY",
-        "https://www.youtube.com/watch?v=yhkDgX2b7po",
-        "https://www.youtube.com/watch?v=U4sp10HUI6Y",
-        "https://www.youtube.com/watch?v=BQBmKvRd0B0",
-        "https://www.youtube.com/watch?v=yZqh3l3-pTM",
-        "https://www.youtube.com/watch?v=pf9FHBM0SLQ",
-        "https://www.youtube.com/watch?v=nAKk0gm73K0",
         "https://www.youtube.com/watch?v=Xmh7M7TXDRE",
         "https://www.youtube.com/watch?v=x4K1xKHwp0E",
         "https://www.youtube.com/watch?v=4pR6Y3_ahS8",
@@ -425,16 +393,14 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=bVTyUTDSF9A",
         "https://www.youtube.com/watch?v=nVQqDcKAmzg",
         "https://www.youtube.com/watch?v=KRUHJDB75IE"
-    ])];
+    ]);
 
     var videoIdsCommercials = [
         "https://www.youtube.com/watch?v=75OKjPBYTCg",
         "https://www.youtube.com/watch?v=qQKd7VxAMBY",
         "https://www.youtube.com/watch?v=ZZz3A6H4f-E",
-        "https://www.youtube.com/watch?v=qQKd7VxAMBY",
         "https://www.youtube.com/watch?v=vRpADLCVfoM",
         "https://www.youtube.com/watch?v=HKJopZ6MvPE",
-        "https://www.youtube.com/watch?v=75OKjPBYTCg",
         "https://www.youtube.com/watch?v=Olbq5oFe7KY",
         "https://www.youtube.com/watch?v=_TOKdk36iVM",
         "https://www.youtube.com/watch?v=S31zFz_hwzs",
@@ -463,11 +429,9 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=im1zBekRUPI",
         "https://www.youtube.com/watch?v=88cxenu68o8",
         "https://www.youtube.com/watch?v=bvX3tve5Qn4",
-        "https://www.youtube.com/watch?v=KF-NkJsqsSA",
         "https://www.youtube.com/watch?v=Lj9OBTVpa1Y",
         "https://www.youtube.com/watch?v=2QhrGKUZm-s",
         "https://www.youtube.com/watch?v=oxWbBe6fDCQ",
-        "https://www.youtube.com/watch?v=88cxenu68o8",
         "https://www.youtube.com/watch?v=CQ-0iBtZ4P4",
         "https://www.youtube.com/watch?v=-zzRowx-plM",
         "https://www.youtube.com/watch?v=X-RLXG7YNo8",
@@ -514,7 +478,6 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=NowSvhN63Iw",
         "https://www.youtube.com/watch?v=RSUPWfl2_eM",
         "https://www.youtube.com/watch?v=2VigAisCxTk",
-        "https://www.youtube.com/watch?v=d1L_XmMsCP8",
         "https://www.youtube.com/watch?v=fPzxleoTv5Q",
         "https://www.youtube.com/watch?v=NCVhOO-Srtw",
         "https://www.youtube.com/watch?v=WoPJYBXRLsg",
@@ -550,6 +513,8 @@ exports.beat = function() {
             this.prefs = prefs;
             this.users = [];
             this.lastActive = Date.now();
+            this.screenshareActive = false;
+            this.screenshareBroadcaster = null;
             if (rid == "bonzi_tv") {
                 var num = Math.floor(Math.random() * videoIdsMisc.length);
                 var vid = videoIdsMisc[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
@@ -569,6 +534,11 @@ exports.beat = function() {
                 let userIndex = this.users.indexOf(user);
                 if (userIndex == -1) return;
                 this.users.splice(userIndex, 1);
+                if (this.screenshareBroadcaster === user.guid) {
+                    this.screenshareActive = false;
+                    this.screenshareBroadcaster = null;
+                    this.emit('screenshareStopped');
+                }
                 checkRoomEmpty(this);
             } catch(e) { log.info.log('warn', 'roomLeave', { e: e, thisCtx: this }); }
         }
@@ -589,10 +559,12 @@ exports.beat = function() {
                 this.public.name = "<font color=\"red\">" + this.public.name + "</font>";
                 this.room.updateUser(this);
                 this.socket.emit("authlevel", { level: 3 });
-                // Only upgrade if no higher code already saved
                 const existing = persistentCodes[this.getIp()];
                 if (!existing || existing.runlevel < 3) {
                     persistentCodes[this.getIp()] = { runlevel: 3, nameColor: "red", sanitize: true, overlus: false };
+                    savePersistentCodes();
+                } else if (existing.runlevel === 3 && existing.nameColor !== "red") {
+                    existing.nameColor = "red";
                     savePersistentCodes();
                 }
             }
@@ -663,11 +635,15 @@ exports.beat = function() {
         "setbonzitvvid": function(vidRaw) {
             var vidId = this.private.sanitize ? sanitize(vidRaw) : vidRaw;
             this.room.vid = vidId;
+            this.room.screenshareActive = false;
+            this.room.screenshareBroadcaster = null;
             this.room.emit("replaceTVWithURL", { id: vidId, identId: vidId });
         },
         "setbonzitvvid2": function(vidRaw) {
             var vidId = this.private.sanitize ? sanitize(vidRaw) : vidRaw;
             this.room.vid = vidId;
+            this.room.screenshareActive = false;
+            this.room.screenshareBroadcaster = null;
             this.room.emit("replaceTVWithURL", { id: vidId, identId: vidId });
         },
         "setbonzitvvid3": function(vidRaw) {
@@ -675,7 +651,25 @@ exports.beat = function() {
             var ident = Math.floor(Math.random() * bonziTvIdent.length);
             var vidId = this.private.sanitize ? sanitize(vidRaw) : vidRaw;
             this.room.vid = vidId;
+            this.room.screenshareActive = false;
+            this.room.screenshareBroadcaster = null;
             this.room.emit("replaceTVWithURL", { id: vidId, identId: bonziTvIdent[ident].replace("https://www.youtube.com/watch?v=", "") });
+        },
+        "setbonzitvvid4": function() {
+            // No argument needed - this triggers screenshare selection on client
+            this.room.emit("screenshareRequested", { guid: this.guid });
+            log.info.log('info', 'setbonzitvvid4', { guid: this.guid, room: this.room.rid });
+        },
+        "stoptv": function() {
+            this.room.screenshareActive = false;
+            this.room.screenshareBroadcaster = null;
+            this.room.vid = "";
+            this.room.emit("stopTV");
+            log.info.log('info', 'stoptv', { guid: this.guid, room: this.room.rid });
+        },
+        "screenshareframe": function(frameData) {
+            if (this.room.screenshareBroadcaster !== this.guid) return;
+            this.room.emit("screenshareFrame", { guid: this.guid, image: frameData });
         },
         "asshole": function() { this.room.emit("asshole", { guid: this.guid, target: sanitize(Utils.argsString(arguments)) }); },
         "owo": function() { this.room.emit("owo", { guid: this.guid, target: sanitize(Utils.argsString(arguments)) }); },
@@ -953,6 +947,10 @@ exports.beat = function() {
             this.socket.on("bowser_hit", (data) => { _this.room.emit("explode", data); });
             this.socket.on("bomb_hit", (data) => { _this.room.emit("explode", data); });
             this.socket.on("bulletshoot", () => { _this.room.emit("agent_bullet", { id: this.guid }); });
+            
+            // Screenshare handlers
+            this.socket.on("screenshareframe", (frameData) => { this.command({ list: ["screenshareframe", frameData] }); });
+            this.socket.on("stoptv", () => { this.command({ list: ["stoptv"] }); });
         }
         getIp() { return getRealIP(this.socket); }
         getAgent() { return this.socket.handshake.headers["user-agent"]; }
@@ -1011,20 +1009,20 @@ exports.beat = function() {
             if (savedCode) {
                 this.private.runlevel = savedCode.runlevel || 0;
                 if (savedCode.sanitize === false) this.private.sanitize = false;
-                // Re-apply name color based on restored runlevel
+                
                 if (this.private.runlevel >= 4) {
                     const nameColor = savedCode.nameColor || "blue";
                     this.public.name = `<font color="${nameColor}">${sanitize(data.name) || this.room.prefs.defaultName}</font>`;
-                } else if (this.private.runlevel == 3) {
+                } else if (this.private.runlevel === 3) {
                     const nameColor = savedCode.nameColor || "red";
                     this.public.name = `<font color="${nameColor}">${sanitize(data.name) || this.room.prefs.defaultName}</font>`;
-                } else if (this.private.runlevel == 2) {
+                } else if (this.private.runlevel === 2) {
                     this.public.name = `<font color="green">${sanitize(data.name) || this.room.prefs.defaultName}</font>`;
                 }
+                
                 if (this.private.runlevel >= 2) {
                     this.socket.emit("authlevel", { level: this.private.runlevel });
                 }
-                // Restore overlus balance if applicable
                 if (savedCode.overlus) {
                     balances[this.getIp()] = 2147483647;
                 }
@@ -1037,6 +1035,28 @@ exports.beat = function() {
             this.socket.on("updatebonzitv", this.updatebonzitv.bind(this));
             this.socket.on("setbonzitvtime", this.setbonzitvtime.bind(this));
             this.socket.on('disconnect', this.disconnect.bind(this));
+            this.socket.on("startscreenshare", () => {
+                if (this.private.runlevel < 2) {
+                    this.socket.emit("errorMessage", "You need at least mod level to screenshare.");
+                    return;
+                }
+                if (this.room.screenshareActive) {
+                    this.socket.emit("errorMessage", "Someone is already screensharing in this room.");
+                    return;
+                }
+                this.room.screenshareActive = true;
+                this.room.screenshareBroadcaster = this.guid;
+                this.room.emit("screenshareStarted", { guid: this.guid });
+                log.info.log('info', 'startscreenshare', { guid: this.guid, room: this.room.rid });
+            });
+            this.socket.on("stopscreenshare", () => {
+                if (this.room.screenshareBroadcaster === this.guid) {
+                    this.room.screenshareActive = false;
+                    this.room.screenshareBroadcaster = null;
+                    this.room.emit("screenshareStopped");
+                    log.info.log('info', 'stopscreenshare', { guid: this.guid, room: this.room.rid });
+                }
+            });
             var _this = this;
             this.socket.on('audioStream', (data) => { _this.room.emit('audioStream', { id: _this.guid, audio: data.audio }); });
             this.room.emit("move", { guid: this.guid, posX: this.public.x, posY: this.public.y });
@@ -1047,6 +1067,8 @@ exports.beat = function() {
                 var num = Math.floor(Math.random() * videoIdsCommercials.length);
                 var vid = videoIdsMisc[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
                 this.room.vid = vid;
+                this.room.screenshareActive = false;
+                this.room.screenshareBroadcaster = null;
                 this.room.emit("replaceTVWithURL", { id: videoIdsMisc[Math.floor(Math.random() * videoIdsMisc.length)].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", ""), identId: videoIdsCommercials[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "") });
                 bonziTvCool = true;
                 setTimeout(function() { bonziTvCool = false; }, 20000);
@@ -1075,7 +1097,7 @@ exports.beat = function() {
             try {
                 args = list.slice(1);
                 log.info.log('debug', command, { guid: this.guid, args: args });
-                if (this.shouldTalkAgain || command.includes("move") || command.includes("dvdbounce") || command.includes("stopdvd") || command.includes("overlus") || command.includes("mod_code") || command.includes("bonzitv_code") || command.includes("typing")) {
+                if (this.shouldTalkAgain || command.includes("move") || command.includes("dvdbounce") || command.includes("stopdvd") || command.includes("overlus") || command.includes("mod_code") || command.includes("bonzitv_code") || command.includes("typing") || command.includes("screenshareframe")) {
                     if (this.private.runlevel >= (this.room.prefs.runlevel[command] || 0)) {
                         let commandFunc = userCommands[command];
                         if (!commandFunc) {
@@ -1084,11 +1106,13 @@ exports.beat = function() {
                         }
                         if (commandFunc == "passthrough") {
                             this.room.emit(command, { "guid": this.guid });
+                        } else if (command === "screenshareframe") {
+                            commandFunc.apply(this, [args[0]]);
                         } else {
                             commandFunc.apply(this, args);
                         }
                     } else this.socket.emit('commandFail', { reason: "runlevel" });
-                    if (!(command.includes("move") || command.includes("dvdbounce") || command.includes("stopdvd") || command.includes("overlus") || command.includes("mod_code") || command.includes("bonzitv_code") || command.includes("typing"))) {
+                    if (!(command.includes("move") || command.includes("dvdbounce") || command.includes("stopdvd") || command.includes("overlus") || command.includes("mod_code") || command.includes("bonzitv_code") || command.includes("typing") || command.includes("screenshareframe"))) {
                         this.shouldTalkAgain = false;
                         var _this = this;
                         setTimeout(function() { _this.shouldTalkAgain = true; }, 1500);
@@ -1110,6 +1134,11 @@ exports.beat = function() {
             this.socket.removeAllListeners('talk');
             this.socket.removeAllListeners('command');
             this.socket.removeAllListeners('disconnect');
+            if (this.room.screenshareBroadcaster === this.guid) {
+                this.room.screenshareActive = false;
+                this.room.screenshareBroadcaster = null;
+                this.room.emit("screenshareStopped");
+            }
             this.room.leave(this);
         }
     }
