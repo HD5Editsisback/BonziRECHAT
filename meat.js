@@ -195,7 +195,6 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=xOMxYKxbSqo",
         "https://www.youtube.com/watch?v=0jgheGgqrlk",
         "https://www.youtube.com/watch?v=YQa2-DY7Y_Q",
-        "https://www.youtube.com/watch?v=8LY0o_CgPR",
         "https://www.youtube.com/watch?v=JfzEO9-Zlhw",
         "https://www.youtube.com/watch?v=rhkgOXksmaY",
         "https://www.youtube.com/watch?v=cdmVPHdpECM",
