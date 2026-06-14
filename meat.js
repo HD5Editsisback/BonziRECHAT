@@ -425,7 +425,7 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=bVTyUTDSF9A",
         "https://www.youtube.com/watch?v=nVQqDcKAmzg",
         "https://www.youtube.com/watch?v=KRUHJDB75IE"
-    ];
+    ])];
 
     var videoIdsCommercials = [
         "https://www.youtube.com/watch?v=75OKjPBYTCg",
