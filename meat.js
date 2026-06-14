@@ -392,7 +392,7 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=bVTyUTDSF9A",
         "https://www.youtube.com/watch?v=nVQqDcKAmzg",
         "https://www.youtube.com/watch?v=KRUHJDB75IE"
-    ]);
+    ])];
 
     var videoIdsCommercials = [
         "https://www.youtube.com/watch?v=75OKjPBYTCg",
@@ -1080,7 +1080,7 @@ exports.beat = function() {
         setbonzitvtime(data) { this.room.curtime = data.curtime; }
         async updatebonzitv() {
             if (!bonziTvCool) {
-                var num = Math.floor(Math.random() * videoIdsCommercials.length);
+                var num = Math.floor(Math.random() * videoIdsMisc.length);
                 var vid = videoIdsMisc[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
                 this.room.vid = vid;
                 this.room.screenshareActive = false;
@@ -1181,7 +1181,7 @@ exports.beat = function() {
 
     setInterval(function() {
         const now = Date.now();
-        for (const [ip, time] of floodViolations.entries()) { if (now - time > 3600000) floodViolations.delete(ip); }
+        floodViolations.clear();
     }, 3600000);
 
     const originalSaveBalances = saveBalances;
