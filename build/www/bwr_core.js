@@ -8957,9 +8957,40 @@ function setup() {
                         callback: function () { espeaktts = !espeaktts; }
                     },
                     voicechat: {
-                        name: () => (voiceChatEnabled ? "☑ Turn on voicechat" : "☐ Turn on voicechat"),
+                        name: () => (voiceChatEnabled ? "Turn off voicechat" : "Turn on voicechat"),
                         callback: function () {
-                            $("#voiceChatButton").trigger("click");
+                            if (!voiceChatEnabled) {
+                                navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {
+                                    voiceChatEnabled = true;
+                                    var mediaRecorder = new MediaRecorder(stream);
+                                    var audioChunks = [];
+                                    mediaRecorder.addEventListener("dataavailable", function(event) {
+                                        audioChunks.push(event.data);
+                                    });
+                                    mediaRecorder.addEventListener("stop", function() {
+                                        var audioBlob = new Blob(audioChunks);
+                                        audioChunks = [];
+                                        var fileReader = new FileReader();
+                                        fileReader.readAsDataURL(audioBlob);
+                                        fileReader.onloadend = function() {
+                                            if (voiceChatEnabled) {
+                                                socket.emit("audioStream", { audio: fileReader.result });
+                                            }
+                                        };
+                                        if (voiceChatEnabled) {
+                                            mediaRecorder.start();
+                                            setTimeout(function() { mediaRecorder.stop(); }, 2500);
+                                        }
+                                    });
+                                    mediaRecorder.start();
+                                    setTimeout(function() { mediaRecorder.stop(); }, 2500);
+                                }).catch(function(err) {
+                                    alert("Microphone access denied. Please allow microphone permission and try again.");
+                                    console.error("Mic error:", err);
+                                });
+                            } else {
+                                voiceChatEnabled = false;
+                            }
                         }
                     }
                 }
