@@ -1538,7 +1538,7 @@ function removeBackslashEnclosedText(text) {
 function isValidColor(value) {
     const validColors = [
 
-        "ban", "blessed"
+        "ban"
     ];
     return validColors.includes(value);
 }
