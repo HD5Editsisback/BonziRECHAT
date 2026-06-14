@@ -8957,7 +8957,7 @@ function setup() {
                         callback: function () { espeaktts = !espeaktts; }
                     },
                     voicechat: {
-                        name: () => `<input type="checkbox" ${voiceChatEnabled ? "checked" : ""} style="margin-right:6px;vertical-align:middle;pointer-events:none;">Turn on voicechat`,
+                        name: () => (voiceChatEnabled ? "☑ Turn on voicechat" : "☐ Turn on voicechat"),
                         callback: function () {
                             $("#voiceChatButton").trigger("click");
                         }
