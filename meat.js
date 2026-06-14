@@ -483,7 +483,24 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=WoPJYBXRLsg",
         "https://www.youtube.com/watch?v=8_10z76b5wA",
         "https://www.youtube.com/watch?v=v_CesAEJzsY",
-        "https://www.youtube.com/watch?v=F40x4iEzVjM"
+        "https://www.youtube.com/watch?v=F40x4iEzVjM",
+        "https://www.youtube.com/watch?v=ztwHk_o-TMI",
+        "https://www.youtube.com/watch?v=8Fd1Il685eI",
+        "https://www.youtube.com/watch?v=z04zvTxG170",
+        "https://www.youtube.com/watch?v=O_Jx28NfzZg",
+        "https://www.youtube.com/watch?v=UN3P95SjxP8",
+        "https://www.youtube.com/watch?v=EuEkdlCn-gI",
+        "https://www.youtube.com/watch?v=9943uVZ-eL4",
+        "https://www.youtube.com/watch?v=3rvFiHa6rJk",
+        "https://www.youtube.com/watch?v=DSYiXCEWsVc",
+        "https://www.youtube.com/watch?v=AykkOSaLphY",
+        "https://www.youtube.com/watch?v=liqetY2e7a8",
+        "https://www.youtube.com/watch?v=gcGI1f24eyM",
+        "https://www.youtube.com/watch?v=Uyw-bne3G2A",
+        "https://www.youtube.com/watch?v=b2OUKjLzcEc",
+        "https://www.youtube.com/watch?v=K0damuN_9bQ",
+        "https://www.youtube.com/watch?v=hb59QZW2SCA",
+        "https://www.youtube.com/watch?v=5ls7g9eH7ss",
     ];
 
     var videoIds4PM2430PM = [];
