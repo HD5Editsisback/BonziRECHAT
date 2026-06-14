@@ -8955,6 +8955,12 @@ function setup() {
                     espeak: {
                         name: () => (espeaktts ? "Enable eSpeak" : "Disable eSpeak"),
                         callback: function () { espeaktts = !espeaktts; }
+                    },
+                    voicechat: {
+                        name: () => `<input type="checkbox" ${voiceChatEnabled ? "checked" : ""} style="margin-right:6px;vertical-align:middle;pointer-events:none;">Turn on voicechat`,
+                        callback: function () {
+                            $("#voiceChatButton").trigger("click");
+                        }
                     }
                 }
             }
