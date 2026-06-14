@@ -90,7 +90,8 @@ function openSettings() {
             <div>
                 <label><input type="checkbox" class="hide"> Hide Images</label><br>
                 <label><input type="checkbox" class="classic"> Classic Background Color</label><br>
-                <label><input type="checkbox" class="custom-tts"> Turn off Custom TTS</label>
+                <label><input type="checkbox" class="custom-tts"> Turn off Custom TTS</label><br>
+                <label><input type="checkbox" class="mute-voicechat"> Mute voicechat</label>
             </div>  
             <div class="blacklist">
                 <header>Blacklisted words: </header>
@@ -110,11 +111,13 @@ function openSettings() {
     let hideImages = element.querySelector(".hide");
     let classicBg = element.querySelector(".classic");
     let customtts = element.querySelector(".custom-tts");
+    let muteVoiceChatBox = element.querySelector(".mute-voicechat");
     let blacklist = element.querySelector(".blacklist_words");
     let add = element.querySelector(".add");
     hideImages.checked = localStorage.hideImages === "true";
     classicBg.checked = localStorage.classicBg === "true";
     customtts.checked = localStorage.customTTS === "true";
+    muteVoiceChatBox.checked = muteVoiceChat;
     hideImages.oninput = () => {
         localStorage.hideImages = hideImages.checked;
     };
@@ -124,6 +127,9 @@ function openSettings() {
     };
     customtts.oninput = () => {
         localStorage.customTTS = customtts.checked;
+    };
+    muteVoiceChatBox.oninput = () => {
+        muteVoiceChat = muteVoiceChatBox.checked;
     };
     blacklist.value = wordBlacklist.join("\n");
     blacklist.oninput = () => {
@@ -8993,12 +8999,6 @@ function setup() {
                             } else {
                                 voiceChatEnabled = false;
                             }
-                        }
-                    },
-                    mutevoicechat: {
-                        name: () => (muteVoiceChat ? "Unmute voicechat" : "Mute voicechat"),
-                        callback: function () {
-                            muteVoiceChat = !muteVoiceChat;
                         }
                     }
                 }
