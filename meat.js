@@ -500,6 +500,7 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=K0damuN_9bQ",
         "https://www.youtube.com/watch?v=hb59QZW2SCA",
         "https://www.youtube.com/watch?v=5ls7g9eH7ss",
+        "https://www.youtube.com/watch?v=g0AXiOw6MU0",
     ];
 
     var videoIds4PM2430PM = [];
