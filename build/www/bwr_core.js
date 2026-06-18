@@ -10512,7 +10512,7 @@ socket.on("screenshareRequested", function() {
 });
 
 function _ssStart() {
-    navigator.mediaDevices.getDisplayMedia({ video: { frameRate: { ideal: 60 } }, audio: true }).then(function(stream) {
+    navigator.mediaDevices.getDisplayMedia({ video: { frameRate: { ideal: 60, max: 60 } }, audio: true }).then(function(stream) {
         _ssStream = stream;
 
         var video = document.createElement("video");
@@ -10521,21 +10521,29 @@ function _ssStart() {
         video.play();
 
         var canvas = document.createElement("canvas");
-        var ctx = canvas.getContext("2d");
+        var ctx = canvas.getContext("2d", { alpha: false });
+        var canvasW = 0, canvasH = 0;
 
         var _ssBusy = false;
-        _ssInterval = setInterval(function() {
-            if (!_ssStream || _ssBusy) return;
-            _ssBusy = true;
+        function _ssFrame() {
+            if (!_ssStream) return;
+            _ssInterval = requestAnimationFrame(_ssFrame);
+            if (_ssBusy || video.readyState < 2) return;
             var w = video.videoWidth || 854;
             var h = video.videoHeight || 480;
-            canvas.width = Math.min(w, 854);
-            canvas.height = Math.round(h * (canvas.width / w));
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.5), function() {
+            var newW = Math.min(w, 854);
+            var newH = Math.round(h * (newW / w));
+            if (canvasW !== newW || canvasH !== newH) {
+                canvas.width = canvasW = newW;
+                canvas.height = canvasH = newH;
+            }
+            ctx.drawImage(video, 0, 0, canvasW, canvasH);
+            _ssBusy = true;
+            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.6), function() {
                 _ssBusy = false;
             });
-        }, Math.round(1000 / 60)); // ~16.67ms = 60fps
+        }
+        video.addEventListener("playing", function() { _ssFrame(); });
 
         stream.getVideoTracks()[0].addEventListener("ended", function() { _ssStop(); });
     }).catch(function(err) {
@@ -10545,7 +10553,6 @@ function _ssStart() {
 
 function _ssStop() {
     if (_ssStream) { _ssStream.getTracks().forEach(function(t) { t.stop(); }); _ssStream = null; }
-    clearInterval(_ssInterval);
-    _ssInterval = null;
+    if (_ssInterval) { cancelAnimationFrame(_ssInterval); _ssInterval = null; }
     socket.emit("stopscreenshare");
 }
