@@ -1073,6 +1073,9 @@ exports.beat = function() {
             this.socket.emit('updateAll', { usersPublic: this.room.getUsersPublic() });
             this.socket.emit('updateGuid', { guid: this.guid });
             this.socket.emit('room', { room: rid, vid: this.room.vid, curtime: this.room.curtime, isOwner: this.room.prefs.owner == this.guid, isPublic: roomsPublic.indexOf(rid) != -1 });
+            if (this.room.screenshareActive) {
+                this.socket.emit("screenshareStarted", { guid: this.room.screenshareBroadcaster });
+            }
             this.socket.on('talk', this.talk.bind(this));
             this.socket.on("updatebonzitv", this.updatebonzitv.bind(this));
             this.socket.on("setbonzitvtime", this.setbonzitvtime.bind(this));
