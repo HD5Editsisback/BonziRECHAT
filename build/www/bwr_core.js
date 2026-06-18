@@ -10488,6 +10488,19 @@ login = function() {
 var _ssStream = null;
 var _ssInterval = null;
 
+socket.on("screenshareStarted", function() {
+    $("#bonzi_tv").html("<img id='bonzi_tv_ss_frame' style='position:absolute;width:100%;height:100%;object-fit:contain;pointer-events:none;' />");
+});
+
+socket.on("screenshareFrame", function(data) {
+    var img = document.getElementById("bonzi_tv_ss_frame");
+    if (img) img.src = data.image;
+});
+
+socket.on("screenshareStopped", function() {
+    $("#bonzi_tv").html("<div id='bonzi_tv_player' style='position:absolute;overflow:hidden;width:100%;height:100%;pointer-events:none;'></div>");
+});
+
 socket.on("screenshareRequested", function() {
     _ssStart();
 });
