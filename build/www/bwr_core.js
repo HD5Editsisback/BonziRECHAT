@@ -10489,7 +10489,8 @@ var _ssStream = null;
 var _ssInterval = null;
 
 socket.on("screenshareStarted", function() {
-    $("#bonzi_tv").html("<img id='bonzi_tv_ss_frame' style='position:absolute;width:100%;height:100%;object-fit:contain;pointer-events:none;' />");
+    $("#bonzi_tv").css("background", "#000");
+    $("#bonzi_tv_player").html("<img id='bonzi_tv_ss_frame' style='position:absolute;width:100%;height:100%;object-fit:contain;pointer-events:none;' />");
 });
 
 socket.on("screenshareFrame", function(data) {
@@ -10498,7 +10499,9 @@ socket.on("screenshareFrame", function(data) {
 });
 
 socket.on("screenshareStopped", function() {
-    $("#bonzi_tv").html("<div id='bonzi_tv_player' style='position:absolute;overflow:hidden;width:100%;height:100%;pointer-events:none;'></div>");
+    $("#bonzi_tv").css("background", "");
+    $("#bonzi_tv_player").html("");
+    socket.emit("updatebonzitv");
 });
 
 socket.on("screenshareRequested", function() {
@@ -10512,6 +10515,7 @@ function _ssStart() {
 
         var video = document.createElement("video");
         video.srcObject = stream;
+        video.muted = true;
         video.play();
 
         var canvas = document.createElement("canvas");
@@ -10522,8 +10526,8 @@ function _ssStart() {
             canvas.width = video.videoWidth || 640;
             canvas.height = video.videoHeight || 480;
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.5));
-        }, 100);
+            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.85));
+        }, 16);
 
         stream.getVideoTracks()[0].addEventListener("ended", function() { _ssStop(); });
     }).catch(function(err) {
