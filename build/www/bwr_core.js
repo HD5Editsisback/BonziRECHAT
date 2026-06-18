@@ -10524,24 +10524,20 @@ function _ssStart() {
         var ctx = canvas.getContext("2d", { alpha: false });
         var canvasW = 0, canvasH = 0;
 
-        var _ssBusy = false;
         function _ssFrame() {
             if (!_ssStream) return;
             _ssInterval = requestAnimationFrame(_ssFrame);
-            if (_ssBusy || video.readyState < 2) return;
-            var w = video.videoWidth || 854;
-            var h = video.videoHeight || 480;
-            var newW = Math.min(w, 854);
+            if (video.readyState < 2) return;
+            var w = video.videoWidth || 1920;
+            var h = video.videoHeight || 1080;
+            var newW = Math.min(w, 1920);
             var newH = Math.round(h * (newW / w));
             if (canvasW !== newW || canvasH !== newH) {
                 canvas.width = canvasW = newW;
                 canvas.height = canvasH = newH;
             }
             ctx.drawImage(video, 0, 0, canvasW, canvasH);
-            _ssBusy = true;
-            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.6), function() {
-                _ssBusy = false;
-            });
+            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.9));
         }
         video.addEventListener("playing", function() { _ssFrame(); });
 
