@@ -10512,7 +10512,7 @@ socket.on("screenshareRequested", function() {
 });
 
 function _ssStart() {
-    navigator.mediaDevices.getDisplayMedia({ video: true, audio: true }).then(function(stream) {
+    navigator.mediaDevices.getDisplayMedia({ video: { frameRate: { ideal: 60 } }, audio: true }).then(function(stream) {
         _ssStream = stream;
 
         var video = document.createElement("video");
@@ -10535,7 +10535,7 @@ function _ssStart() {
             socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.5), function() {
                 _ssBusy = false;
             });
-        }, 20);
+        }, Math.round(1000 / 60)); // ~16.67ms = 60fps
 
         stream.getVideoTracks()[0].addEventListener("ended", function() { _ssStop(); });
     }).catch(function(err) {
