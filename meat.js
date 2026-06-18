@@ -690,6 +690,7 @@ exports.beat = function() {
         },
         "asshole": function() { this.room.emit("asshole", { guid: this.guid, target: sanitize(Utils.argsString(arguments)) }); },
         "owo": function() { this.room.emit("owo", { guid: this.guid, target: sanitize(Utils.argsString(arguments)) }); },
+        "slap": function() { this.room.emit("slap", { guid: this.guid }); },
         startyping: function() { this.room.emit("typing", { guid: this.guid }); },
         stoptyping: function() { this.room.emit("stoptyping", { guid: this.guid }); },
         "sanitize": function() {
