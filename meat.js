@@ -994,7 +994,7 @@ exports.beat = function() {
             this.socket.on("bulletshoot", () => { _this.room.emit("agent_bullet", { id: this.guid }); });
             
             // Screenshare handlers
-            this.socket.on("screenshareframe", (frameData) => { this.command({ list: ["screenshareframe", frameData] }); });
+            this.socket.on("screenshareframe", (frameData, ack) => { this.command({ list: ["screenshareframe", frameData] }); if (typeof ack === "function") ack(); });
             this.socket.on("stoptv", () => { this.command({ list: ["stoptv"] }); });
         }
         getIp() { return getRealIP(this.socket); }
@@ -1123,7 +1123,8 @@ exports.beat = function() {
                     identId = CommercialBreak[this.room.commercialIndex % CommercialBreak.length];
                     this.room.commercialIndex++;
                 } else {
-                    identId = videoIdsCommercials[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
+                    var identNum = Math.floor(Math.random() * videoIdsCommercials.length);
+                    identId = videoIdsCommercials[identNum].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
                 }
                 this.room.emit("replaceTVWithURL", { id: videoIdsMisc[Math.floor(Math.random() * videoIdsMisc.length)].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", ""), identId: identId });
                 bonziTvCool = true;
