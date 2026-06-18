@@ -9272,6 +9272,16 @@ function setup() {
         var b = agents[a.guid];
         b.cancel(), b.owo(a.target.replaceAll("{NAME}","(NAME)").replaceAll("{COLOR}","(COLOR)"));
     });
+    socket.on("slap", function (data) {
+        var b = agents[data.guid];
+        if (b.mute) return;
+        b.cancel();
+        b.runSingleEvent([
+            { type: "anim", anim: "praise_fwd", ticks: 15 },
+            { type: "text", text: "SLAP!" },
+            { type: "idle" }
+        ]);
+    });
     socket.on("triggered", function (data) {
         var b = agents[data.guid];
         if (b.mute) return;
