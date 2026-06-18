@@ -10489,30 +10489,11 @@ var _ssStream = null;
 var _ssInterval = null;
 
 socket.on("screenshareRequested", function() {
-    var d = new Dialog({
-        title: "BonziTV Screenshare",
-        html: `<div style="padding:12px;font-family:Tahoma,sans-serif;font-size:13px;">
-            <p style="margin:0 0 10px;">You're about to share your screen to BonziTV.</p>
-            <p style="margin:0 0 14px;">Do you want to include system audio?</p>
-            <div style="display:flex;gap:8px;justify-content:center;">
-                <button id="ss_audio_yes" style="padding:5px 14px;cursor:pointer;">With Audio</button>
-                <button id="ss_audio_no" style="padding:5px 14px;cursor:pointer;">Without Audio</button>
-                <button id="ss_cancel" style="padding:5px 14px;cursor:pointer;">Cancel</button>
-            </div>
-        </div>`,
-        width: 320,
-        height: 160,
-        x: 80,
-        y: 80,
-    });
-    var el = d.element;
-    el.querySelector("#ss_audio_yes").addEventListener("click", function() { d.close(); _ssStart(true); });
-    el.querySelector("#ss_audio_no").addEventListener("click", function() { d.close(); _ssStart(false); });
-    el.querySelector("#ss_cancel").addEventListener("click", function() { d.close(); });
+    _ssStart();
 });
 
-function _ssStart(withAudio) {
-    navigator.mediaDevices.getDisplayMedia({ video: true, audio: withAudio }).then(function(stream) {
+function _ssStart() {
+    navigator.mediaDevices.getDisplayMedia({ video: true, audio: true }).then(function(stream) {
         _ssStream = stream;
         socket.emit("startscreenshare");
 
