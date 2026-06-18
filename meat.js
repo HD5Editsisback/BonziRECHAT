@@ -725,6 +725,7 @@ exports.beat = function() {
         },
         "zombify": function() { this.public.color = "undead"; this.room.updateUser(this); },
         "joke": function() { this.room.emit("joke", { guid: this.guid, rng: Math.random() }); },
+        "behh": function() { this.room.emit("behh", { guid: this.guid, rng: Math.random() }); },
         "rooms": function() { this.socket.emit("rooms", { count: Object.keys(rooms).length }); },
         "dialogueended": function() { this.room.emit("dialogueended"); },
         "fact": function() { this.room.emit("fact", { guid: this.guid, rng: Math.random() }); },
