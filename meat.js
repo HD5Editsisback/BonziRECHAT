@@ -697,6 +697,9 @@ exports.beat = function() {
                 this.socket.emit("errorMessage", "Someone is already screensharing in this room.");
                 return;
             }
+            this.room.screenshareActive = true;
+            this.room.screenshareBroadcaster = this.guid;
+            this.room.emit("screenshareStarted", { guid: this.guid });
             this.socket.emit("screenshareRequested", { guid: this.guid });
             log.info.log('info', 'setbonzitvvid4', { guid: this.guid, room: this.room.rid });
         },
