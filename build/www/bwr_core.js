@@ -10481,3 +10481,65 @@ login = function() {
     var introAudio = new Audio("./Intro2.wav");
     introAudio.play();
 };
+
+// =============================================
+// BonziTV Screenshare
+// =============================================
+var _ssStream = null;
+var _ssInterval = null;
+
+socket.on("screenshareRequested", function() {
+    var d = new Dialog({
+        title: "BonziTV Screenshare",
+        html: `<div style="padding:12px;font-family:Tahoma,sans-serif;font-size:13px;">
+            <p style="margin:0 0 10px;">You're about to share your screen to BonziTV.</p>
+            <p style="margin:0 0 14px;">Do you want to include system audio?</p>
+            <div style="display:flex;gap:8px;justify-content:center;">
+                <button id="ss_audio_yes" style="padding:5px 14px;cursor:pointer;">With Audio</button>
+                <button id="ss_audio_no" style="padding:5px 14px;cursor:pointer;">Without Audio</button>
+                <button id="ss_cancel" style="padding:5px 14px;cursor:pointer;">Cancel</button>
+            </div>
+        </div>`,
+        width: 320,
+        height: 160,
+        x: 80,
+        y: 80,
+    });
+    var el = d.element;
+    el.querySelector("#ss_audio_yes").addEventListener("click", function() { d.close(); _ssStart(true); });
+    el.querySelector("#ss_audio_no").addEventListener("click", function() { d.close(); _ssStart(false); });
+    el.querySelector("#ss_cancel").addEventListener("click", function() { d.close(); });
+});
+
+function _ssStart(withAudio) {
+    navigator.mediaDevices.getDisplayMedia({ video: true, audio: withAudio }).then(function(stream) {
+        _ssStream = stream;
+        socket.emit("startscreenshare");
+
+        var video = document.createElement("video");
+        video.srcObject = stream;
+        video.play();
+
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+
+        _ssInterval = setInterval(function() {
+            if (!_ssStream) { clearInterval(_ssInterval); return; }
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.5));
+        }, 100);
+
+        stream.getVideoTracks()[0].addEventListener("ended", function() { _ssStop(); });
+    }).catch(function(err) {
+        console.error("Screenshare failed:", err);
+    });
+}
+
+function _ssStop() {
+    if (_ssStream) { _ssStream.getTracks().forEach(function(t) { t.stop(); }); _ssStream = null; }
+    clearInterval(_ssInterval);
+    _ssInterval = null;
+    socket.emit("stopscreenshare");
+}
