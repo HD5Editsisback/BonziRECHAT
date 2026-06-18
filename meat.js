@@ -1098,7 +1098,7 @@ exports.beat = function() {
             if (typeof data.text == "undefined") return;
             if (this.shouldTalkAgain || this.private.runlevel == 4) {
                 log.info.log('info', 'talk', { guid: this.guid, text: data.text });
-                let text = this.private.sanitize ? sanitize(data.text.replace(/&#60/g, "&lt;").replace(/&#62/g, "&gt;").replace(/\[\[/g, "&#91;&#91;")) : data.text;
+                let text = this.private.sanitize ? sanitize(data.text.replace(/&#60/g, "&lt;").replace(/&#62/g, "&gt;").replace(/\[\[/g, "&#91;&#91;"), { allowedTags: [], allowedAttributes: {} }) : data.text;
                 if (filtertext(text)) text = "behh behh behh behh behh behh behh behh behh behh behh behh behh behh behh";
                 if ((text.length <= this.room.prefs.char_limit) && (text.length > 0)) { this.room.emit('talk', { guid: this.guid, text: text, name: this.public.name, pitch: this.public.pitch, speed: this.public.speed }); }
                 if (this.private.runlevel != 4) {
