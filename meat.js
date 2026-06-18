@@ -503,6 +503,24 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=g0AXiOw6MU0",
     ];
 
+    var CommercialBreak = [
+        "uwJQQux0TF0",
+        "DuD_boVOl54",
+        "6_82t7F4W7A",
+        "4N39bXddG6g",
+        "jyZun_uFzac",
+        "dniEEEK4zSg",
+        "O_hFoqenCL4",
+        "BBUNVaJf7sw",
+        "14e_abQ0ZyY",
+        "QaMB-yGvBV0",
+        "3eSIcmaNCiY",
+        "lhsHBjFcc-Q",
+        "1gTAXOu_TLw",
+        "1M716cqmXDQ",
+        "8yn5advjZDM",
+    ];
+
     var videoIds4PM2430PM = [];
     var videoIds5PM = [];
     var videoIds7PM = [];
@@ -536,6 +554,8 @@ exports.beat = function() {
                 var num = Math.floor(Math.random() * videoIdsMisc.length);
                 var vid = videoIdsMisc[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
                 this.vid = vid;
+                this.identCount = 0;
+                this.commercialIndex = 0;
             } else {
                 this.vid = "";
             }
@@ -673,8 +693,11 @@ exports.beat = function() {
             this.room.emit("replaceTVWithURL", { id: vidId, identId: bonziTvIdent[ident].replace("https://www.youtube.com/watch?v=", "") });
         },
         "setbonzitvvid4": function() {
-            // No argument needed - this triggers screenshare selection on client
-            this.room.emit("screenshareRequested", { guid: this.guid });
+            if (this.room.screenshareActive) {
+                this.socket.emit("errorMessage", "Someone is already screensharing in this room.");
+                return;
+            }
+            this.socket.emit("screenshareRequested", { guid: this.guid });
             log.info.log('info', 'setbonzitvvid4', { guid: this.guid, room: this.room.rid });
         },
         "stoptv": function() {
@@ -1088,7 +1111,15 @@ exports.beat = function() {
                 this.room.vid = vid;
                 this.room.screenshareActive = false;
                 this.room.screenshareBroadcaster = null;
-                this.room.emit("replaceTVWithURL", { id: videoIdsMisc[Math.floor(Math.random() * videoIdsMisc.length)].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", ""), identId: videoIdsCommercials[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "") });
+                this.room.identCount = (this.room.identCount || 0) + 1;
+                var identId;
+                if (this.room.identCount % 2 === 0) {
+                    identId = CommercialBreak[this.room.commercialIndex % CommercialBreak.length];
+                    this.room.commercialIndex++;
+                } else {
+                    identId = videoIdsCommercials[num].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", "");
+                }
+                this.room.emit("replaceTVWithURL", { id: videoIdsMisc[Math.floor(Math.random() * videoIdsMisc.length)].replace("https://www.youtube.com/watch?v=", "").replace("https://www.youtube.com/", ""), identId: identId });
                 bonziTvCool = true;
                 setTimeout(function() { bonziTvCool = false; }, 20000);
             }
