@@ -779,6 +779,21 @@ body.vaporwave #chat_send {
     /* line 185, server/public/src/sass/logon.scss */
     #login_social a:visited {
       color: #FAFAFA; }
+  .login_buttons_row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    margin-bottom: 3px; }
+  .login_buttons_row a img {
+    display: block;
+    width: 88px;
+    height: 31px;
+    image-rendering: pixelated;
+    border: none; }
+  .login_buttons_row a img.natural-size {
+    width: auto;
+    height: auto; }
 
 @media screen and (max-height: 550px) {
   /* line 3, server/public/src/sass/logon.mobile.scss */
