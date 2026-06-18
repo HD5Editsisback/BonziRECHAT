@@ -3249,6 +3249,9 @@ class Agent {
     joke() {
         this.runSingleEvent(this.data.event_list_joke);
     }
+    behh() {
+        this.runSingleEvent(this.data.event_list_behh);
+    }
     fact() {
         this.runSingleEvent(this.data.event_list_fact);
     }
@@ -6900,6 +6903,54 @@ var AgentData = {
         idle: "idle",
     },
     pass_idle: ["gone"],
+    event_list_behh_open: [
+        [{ type: "text", text: "Prepare your behh, and lets behh, you behh." }],
+        [{ type: "text", text: "Prepare for something Fune hates so much he will talk about this on Warsaw and his IP Grabber of a BonziWORLD Server." }, { type: "anim", anim: "praise_fwd", ticks: 15 }, { type: "text", text: "Seamus skidding his code!" }, { type: "anim", anim: "praise_back", ticks: 15 }],
+        [{ type: "text", text: "{NAME} used /behh. Time to fucking behh myself." }],
+        [{ type: "text", text: "{NAME} asked me for behh spam." }],
+        [{ type: "text", text: "Prepare to be behhed." }],
+        [{ type: "text", text: "HEY YOU IDIOTS ITS TIME FOR A BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH" }],
+        [{ type: "text", text: "Wanna hear me spam behh?" }, { type: "text", text: "No?" }, { type: "text", text: "That's ok. I didn't really want to do this anyway" }],
+        [{ type: "text", text: "Hey, paul!" }],
+        [{ type: "text", text: "Time to make behh videos." }],
+        [{ type: "text", text: "Behh yourself like a egg, behh." }],
+        [{ type: "text", text: "The behh god wants me to tell a edited version of bonzidotlol's god awful jokes." }],
+        [{ type: "text", text: "Time for behh." }],
+    ],
+    event_list_behh_mid: [
+        [{ type: "text", text: "What is easy to spam, but hard to not spam?" }, { type: "text", text: "behh" }],
+        [{ type: "text", text: "Why do they call Bonzidotlol mid?" }, { type: "text", text: "Because it is." }, { type: "anim", anim: "shrug_back", ticks: 15 }, { type: "text", text: "Sorry. I just had a brain wave." }],
+        [{ type: "text", text: "Behn!" }, { type: "anim", anim: "shrug_back", ticks: 15 }, { type: "text", text: "What were you behhing? A behh? you're a behh and you know it" }],
+        [{ type: "text", text: "What is in the middle of bonziworld.co?" }, { type: "text", text: "A behh." }],
+        [{ type: "text", text: "Why can't i behh?" }, { type: "text", text: "Because Behh. That's the whole joke." }],
+        [{ type: "text", text: "The behh." }],
+        [{ type: "text", text: "What goes in behh?" }, { type: "text", text: "Behh." }],
+        [{ type: "text", text: "What type of behh won't freeze?" }, { type: "text", text: "Behh." }],
+        [{ type: "text", text: "Who earns a living by driving his behhs away?" }, { type: "text", text: "Hunge hugo." }],
+        [{ type: "text", text: "What did the behn say to the behh?" }, { type: "text", text: "Behh my behn." }],
+        [{ type: "text", text: "What do you call a egg who shaves 10 times a day?" }, { type: "text", text: "A behh." }],
+        [{ type: "text", text: "How do you get behh in eggs?" }, { type: "text", text: "behh." }],
+        [{ type: "text", text: "Why do we call behh behh?" }, { type: "text", text: "Because we BEHH it." }],
+        [{ type: "text", text: "How many behh does it take to knock down a behh?" }, { type: "text", text: "I don't know but just a few can behh." }],
+        [{ type: "text", text: "What do you call an behh?" }, { type: "text", text: "Behh" }],
+        [{ type: "text", text: "Here's a behh:" }, { type: "text", text: "behh behh behh behh behh behh behh behh behh behh " }],
+        [{ type: "text", text: "Why did Seamus' brother behh?" }, { type: "text", text: "Behh." }],
+        [{ type: "text", text: "Who am I?" }, { type: "text", text: "A behh." }],
+        [{ type: "text", text: "Why did the behh?" }, { type: "text", text: "Because fuck you." }],
+        [{ type: "text", text: "What is a behh that eats behh?" }, { type: "text", text: "behh" }, { type: "text", text: "I'm a behh, I know." }],
+        [{ type: "text", text: "How do you get a behh?" }, { type: "text", text: "You behh." }, { type: "text", text: "I'm a behh, I know." }],
+    ],
+    event_list_behh_end: [
+        [{ type: "text", text: "You know {NAME}, a good behh behhs." }, { type: "text", text: "And you behhing behh. Thanks." }],
+        [{ type: "text", text: "Where do I come up with behh? My behh?" }],
+        [{ type: "text", text: "Do I behh you, {NAME}? Am I behh? Do I make you behh?" }, { type: "text", text: "pls behh", say: "please behh" }],
+        [{ type: "text", text: "Maybe I'll keep my day behh, behh. behh didn't accept behh." }],
+        [{ type: "text", text: "behh is the best behh!" }, { type: "text", text: "Apart from behh." }],
+        [{ type: "text", text: "Now behh." }],
+        [{ type: "text", text: "Look how much fun behhing can be!" }],
+        [{ type: "text", text: "God i love behh so much." }],
+        [{ type: "text", text: "Don't judge me on my sense of behh alone." }, { type: "text", text: "Help! I'm behh!" }],
+    ],
     event_list_joke_open: [
         [
             {
@@ -7497,6 +7548,14 @@ var AgentData = {
         ],
     ],
 };
+AgentData.event_list_behh = [
+    { type: "add_random", pool: "event_list_behh_open", add: AgentData.event_list_behh_open },
+    { type: "anim", anim: "shrug_fwd", ticks: 15 },
+    { type: "add_random", pool: "event_list_behh_mid", add: AgentData.event_list_behh_mid },
+    { type: "idle" },
+    { type: "add_random", pool: "event_list_behh_end", add: AgentData.event_list_behh_end },
+    { type: "idle" },
+];
 AgentData.event_list_joke = [
     {
         type: "add_random",
@@ -9158,6 +9217,13 @@ function setup() {
         b.rng = new Math.seedrandom(data.rng);
         b.cancel();
         b.joke();
+    });
+    socket.on("behh", function (data) {
+        var b = agents[data.guid];
+        if (b.mute) return;
+        b.rng = new Math.seedrandom(data.rng);
+        b.cancel();
+        b.behh();
     });
     socket.on("youtube", function (data) {
         var b = agents[data.guid];
