@@ -10523,14 +10523,18 @@ function _ssStart() {
         var canvas = document.createElement("canvas");
         var ctx = canvas.getContext("2d");
 
+        var _ssBusy = false;
         _ssInterval = setInterval(function() {
-            if (!_ssStream) { clearInterval(_ssInterval); return; }
+            if (!_ssStream || _ssBusy) return;
+            _ssBusy = true;
             var w = video.videoWidth || 854;
             var h = video.videoHeight || 480;
             canvas.width = Math.min(w, 854);
             canvas.height = Math.round(h * (canvas.width / w));
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            socket.volatile.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.5));
+            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.5), function() {
+                _ssBusy = false;
+            });
         }, 20);
 
         stream.getVideoTracks()[0].addEventListener("ended", function() { _ssStop(); });
