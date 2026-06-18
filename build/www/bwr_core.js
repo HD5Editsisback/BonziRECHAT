@@ -10525,12 +10525,12 @@ function _ssStart() {
 
         _ssInterval = setInterval(function() {
             if (!_ssStream) { clearInterval(_ssInterval); return; }
-            var w = video.videoWidth || 1280;
-            var h = video.videoHeight || 720;
-            canvas.width = Math.min(w, 1280);
+            var w = video.videoWidth || 854;
+            var h = video.videoHeight || 480;
+            canvas.width = Math.min(w, 854);
             canvas.height = Math.round(h * (canvas.width / w));
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.6));
+            socket.volatile.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.5));
         }, 20);
 
         stream.getVideoTracks()[0].addEventListener("ended", function() { _ssStop(); });
