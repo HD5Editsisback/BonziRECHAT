@@ -9323,12 +9323,14 @@ function setup() {
         ]);
     });
     socket.on("replaceTVWithURL", function (a) {
+        if (window.bwrYTPlayer) { try { window.bwrYTPlayer.destroy(); } catch(e){} window.bwrYTPlayer = null; }
+        if (typeof updateCurrentTime !== "undefined") clearInterval(updateCurrentTime);
         $("#bonzi_tv").html("<div id='bonzi_tv_player' style='position: absolute; overflow: hidden; width: 100%; height: 100%; pointer-events: none;'></div>");
         function onPlayerReady(event) {
             event.target.setVolume(100);
             event.target.playVideo();
         }
-            var youtube = new YT.Player("bonzi_tv_player", {
+            window.bwrYTPlayer = new YT.Player("bonzi_tv_player", {
                 height: "100%",
                 width: "100%",
                 videoId: a.identId,
@@ -10489,6 +10491,8 @@ var _ssStream = null;
 var _ssInterval = null;
 
 socket.on("screenshareStarted", function() {
+    if (window.bwrYTPlayer) { try { window.bwrYTPlayer.destroy(); } catch(e){} window.bwrYTPlayer = null; }
+    if (typeof updateCurrentTime !== "undefined") clearInterval(updateCurrentTime);
     $("#bonzi_tv").css("background", "#000").html("<div id='bonzi_tv_player' style='position:absolute;width:100%;height:100%;pointer-events:none;'><img id='bonzi_tv_ss_frame' style='width:100%;height:100%;object-fit:contain;' /></div>");
 });
 
@@ -10521,11 +10525,13 @@ function _ssStart() {
 
         _ssInterval = setInterval(function() {
             if (!_ssStream) { clearInterval(_ssInterval); return; }
-            canvas.width = video.videoWidth || 640;
-            canvas.height = video.videoHeight || 480;
+            var w = video.videoWidth || 1280;
+            var h = video.videoHeight || 720;
+            canvas.width = Math.min(w, 1280);
+            canvas.height = Math.round(h * (canvas.width / w));
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.85));
-        }, 16);
+            socket.emit("screenshareframe", canvas.toDataURL("image/jpeg", 0.6));
+        }, 20);
 
         stream.getVideoTracks()[0].addEventListener("ended", function() { _ssStop(); });
     }).catch(function(err) {
