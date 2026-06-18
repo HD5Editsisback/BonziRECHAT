@@ -10489,8 +10489,7 @@ var _ssStream = null;
 var _ssInterval = null;
 
 socket.on("screenshareStarted", function() {
-    $("#bonzi_tv").css("background", "#000");
-    $("#bonzi_tv_player").html("<img id='bonzi_tv_ss_frame' style='position:absolute;width:100%;height:100%;object-fit:contain;pointer-events:none;' />");
+    $("#bonzi_tv").css("background", "#000").html("<div id='bonzi_tv_player' style='position:absolute;width:100%;height:100%;pointer-events:none;'><img id='bonzi_tv_ss_frame' style='width:100%;height:100%;object-fit:contain;' /></div>");
 });
 
 socket.on("screenshareFrame", function(data) {
@@ -10511,7 +10510,6 @@ socket.on("screenshareRequested", function() {
 function _ssStart() {
     navigator.mediaDevices.getDisplayMedia({ video: true, audio: true }).then(function(stream) {
         _ssStream = stream;
-        socket.emit("startscreenshare");
 
         var video = document.createElement("video");
         video.srcObject = stream;
