@@ -519,6 +519,7 @@ exports.beat = function() {
         "1gTAXOu_TLw",
         "1M716cqmXDQ",
         "8yn5advjZDM",
+        "EKgM6BFI9R4",
     ];
 
     var videoIds4PM2430PM = [];
