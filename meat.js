@@ -623,6 +623,8 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=hb59QZW2SCA",
         "https://www.youtube.com/watch?v=5ls7g9eH7ss",
         "https://www.youtube.com/watch?v=g0AXiOw6MU0",
+        "https://www.youtube.com/watch?v=vponysa9DJA",
+        "https://www.youtube.com/watch?v=8WrZpARf7j0",
     ];
 
     var CommercialBreak = [
