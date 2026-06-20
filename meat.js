@@ -886,10 +886,6 @@ exports.beat = function() {
             const BOT_AGENTS = [
                 { name: "Peedy",  color: "peedy"  },
                 { name: "Bonzi",  color: "bonzi"  },
-                { name: "Max",    color: "max"     },
-                { name: "Merlin", color: "merlin"  },
-                { name: "Robby",  color: "robby"   },
-                { name: "Genie",  color: "genie"   },
             ];
             const bots = BOT_AGENTS.map(agent => {
                 const bot = {
@@ -929,10 +925,6 @@ exports.beat = function() {
             const BOT_AGENTS = [
                 { name: "Peedy",  color: "peedy"  },
                 { name: "Bonzi",  color: "bonzi"  },
-                { name: "Max",    color: "max"     },
-                { name: "Merlin", color: "merlin"  },
-                { name: "Robby",  color: "robby"   },
-                { name: "Genie",  color: "genie"   },
             ];
             // Spawn all bots into the room
             const bots = BOT_AGENTS.map(agent => {
