@@ -977,7 +977,7 @@ exports.beat = function() {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": "Bearer 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",
+                            "Authorization": "Bearer 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",
                             "Content-Length": Buffer.byteLength(payload)
                         }
                     }, (res) => {
