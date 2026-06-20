@@ -513,6 +513,15 @@ exports.beat = function() {
   "https://www.youtube.com/watch?v=sCKONPsB_Qc",
   "https://www.youtube.com/watch?v=67XnrO-Cygc",
   "https://www.youtube.com/watch?v=6nxYlPLQly4",
+  "https://www.youtube.com/watch?v=HwAPLk_sQ3w",
+  "https://www.youtube.com/watch?v=4ofJpOEXrZs",
+  "https://www.youtube.com/watch?v=bKjfw77cxeQ",
+  "https://www.youtube.com/watch?v=Q9KWcWKo2T8",
+  "https://www.youtube.com/watch?v=L4p2gN2CzsA",
+  "https://www.youtube.com/watch?v=mOvhHim78YA",
+  "https://www.youtube.com/watch?v=oaOG1xOk7XY",
+  "https://www.youtube.com/watch?v=DMNlzf8PiEM",
+  "https://www.youtube.com/watch?v=PVy-bcTsO8A",      
         
     ])];
 
@@ -645,6 +654,25 @@ exports.beat = function() {
         "1M716cqmXDQ",
         "8yn5advjZDM",
         "EKgM6BFI9R4",
+        "iuaRQ5NQFq8",
+        "FkXhKu80CWU",
+        "ZX9bSKucR1o",
+        "lmc0tpOHBHA",
+        "KoH4RcdNUoU",
+        "sQ5DCwcpMy0",
+        "viNz5TiNgSc",
+        "VI6XO8EijT4",
+        "2z5JvSMcZBE",
+        "4lFnIlH06Sw",
+        "MT6CdUJj7YM",
+        "AjFk1cY265I",
+        "1JlxzSxvOyw",
+        "mwUY9dOnSbE",
+        "zwLeSTNr80c",
+        "T29tMV1_x1A",
+        "rafQwY9n_M0",
+        "x287j7Vby0U",
+        "abZtsmMUbJo",
     ];
 
     var videoIds4PM2430PM = [];
