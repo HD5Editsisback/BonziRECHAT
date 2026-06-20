@@ -886,11 +886,19 @@ exports.beat = function() {
             const BOT_AGENTS = [
                 { name: "Peedy",  color: "peedy"  },
                 { name: "Bonzi",  color: "bonzi"  },
+                { name: "Max",    color: "max"     },
+                { name: "Merlin", color: "merlin"  },
+                { name: "Robby",  color: "robby"   },
+                { name: "Genie",  color: "genie"   },
             ];
             const bots = BOT_AGENTS.map(agent => {
                 const bot = {
                     guid: Utils.guidGen(),
                     isAIBot: true,
+                    getIp: () => "bot",
+                    getAgent: () => "bot",
+                    disconnect: () => {},
+                    private: { runlevel: 0, sanitize: true, login: true },
                     public: {
                         name: agent.name,
                         color: agent.color,
@@ -925,12 +933,20 @@ exports.beat = function() {
             const BOT_AGENTS = [
                 { name: "Peedy",  color: "peedy"  },
                 { name: "Bonzi",  color: "bonzi"  },
+                { name: "Max",    color: "max"     },
+                { name: "Merlin", color: "merlin"  },
+                { name: "Robby",  color: "robby"   },
+                { name: "Genie",  color: "genie"   },
             ];
             // Spawn all bots into the room
             const bots = BOT_AGENTS.map(agent => {
                 const bot = {
                     guid: Utils.guidGen(),
                     isAIBot: true,
+                    getIp: () => "bot",
+                    getAgent: () => "bot",
+                    disconnect: () => {},
+                    private: { runlevel: 0, sanitize: true, login: true },
                     public: {
                         name: agent.name,
                         color: agent.color,
@@ -969,7 +985,7 @@ exports.beat = function() {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": "Bearer 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",
+                            "Authorization": "Bearer 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",
                             "Content-Length": Buffer.byteLength(payload)
                         }
                     }, (res) => {
