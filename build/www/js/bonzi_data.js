@@ -242,7 +242,7 @@ App_Bonzi.data_queue.push(function() {
 				{
 					type: "text",
 					text: "OK, if you're sure."
-				}
+				}			
 			]
 		],
 		event_list_joke_mid: [
@@ -253,14 +253,22 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Too much Java!"
+					text: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 				},
+				{
+					type: "text",
+					text: "Sorry for my sad crazy existence."
+				},				
 			],[
 				{
 					type: "text",
-					text: "Two sausages are in a pan. One looks at the other and says \"Boy it's hot in here!\" and the other sausage says \"Unbelievable! It's a talking sausage!\" He who laughs last thinks slowest!",
-					say: "Two sausages are in a pan. One looks at the other and says, Boy it's hot in here! and the other sausage says, Unbelievable! It's a talking sausage! He who laughs last thinks slowest!"
+					text: "Two sausages are in a pan. One looks at the other and says \"Boy it's hot in here!\" and the other sausage says \"Unbelievable! It's a talking sausage!\" ",
+					say: "Two sausages are in a pan. One looks at the other and says, Boy it's hot in here! and the other sausage says, Unbelievable! It's a talking sausage!"
 				},
+				{
+					type: "text",
+					text: "What are you except this? A 18+ joke? You're a retarded fuck!"
+				},				
 			],[
 				{
 					type: "text",
@@ -268,7 +276,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "The letter 'r'!"
+					text: "An giant inflattable buttplug."
 				}
 			],[
 				{
@@ -286,7 +294,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "A lawn mooer."
+					text: "AAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSSSSS! FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK!!!!!!!!!!!!"
 				}
 			],[
 				{
@@ -295,7 +303,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Hot water!"
+					text: "OH SHIT THE FLOOR IS LAVA!"
 				}
 			],[
 				{
@@ -304,7 +312,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "A taxi driver!"
+					text: "Nintendo!"
 				}
 			],[
 				{
@@ -313,7 +321,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Look grandpa, no hands!"
+					text: "shut up old hag i don't want to be the HAHASMUYRDNRHYHNYRRYRGBYET type shit."
 				}
 			],[
 				{
@@ -322,7 +330,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "A barber!"
+					text: "A woman!"
 				}
 			],[
 				{
@@ -331,7 +339,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "You plant it...in the spring!"
+					text: "WAIT- WHAT- WHAR- WHAAAAAAAAT? AYOOOOOOOOOOOOOOOOOO-"
 				}
 			],[
 				{
@@ -340,8 +348,17 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Because everybody 'kneads' it!"
-				}
+					text: "Because we knead it!"
+				}		
+			],[
+				{
+					type: "text",
+					text: "What color did pink and comes out blue?"
+				},
+				{
+					type: "text",
+					text: "Sonic's AYOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO WHAT THE FUUUUUUUUUUUUUUUUUUUUUU-"
+				}						
 			]
 		],
 		event_list_joke_end: [
@@ -350,31 +367,51 @@ App_Bonzi.data_queue.push(function() {
 					type: "text",
 					text: "You know {NAME}, a good friend laughs at your jokes even when they're not so good."
 				},
+				{
+					type: "text",
+					text: "And you suck, thanks."
+				}			
 			],[
 				{
 					type: "text",
 					text: "Where do I come up with these?"
+				},
+				{
+					type: "text",
+					text: "My fucking ass?"
 				}
 			],[
 				{
 					type: "text",
 					text: "Do I amuse you, {NAME}? Am I funny? Do I make you laugh?"
-				}
+				},
+				{
+					type: "text",
+					text: "please respond"
+				}				
 			],[
 				{
 					type: "text",
-					text: "Maybe I'll keep my day job, {NAME}."
+					text: "Maybe I'll keep my day job, {NAME}... Pateron didn't accept me."
 				}
 			],[
 				{
 					type: "text",
 					text: "Laughter is the best medicine!"
-				}
+				},
+				{
+					type: "text",
+					text: "Apart from meth."
+				}				
 			],[
 				{
 					type: "text",
 					text: "Don't judge me on my sense of humor alone. Please."
 				}
+				{
+					type: "text",
+					text: "Help me! I'm embarassed!"
+				}				
 			]
 		],
 
@@ -441,6 +478,20 @@ App_Bonzi.data_queue.push(function() {
 					anim: "grin_fwd",
 					ticks: 15
 				}
+                {
+					type: "anim",
+					anim: "earth_fwd",
+					ticks: 15
+				},
+				{
+					type: "text",
+					text: "Did you know it was originally a fork of many BonziWORLD servers inlucding .gay and .kr?",
+				},
+				{
+					type: "anim",
+					anim: "earth_back",
+					ticks: 15
+				},		
 			]
 		],
 
