@@ -206,10 +206,24 @@ App_Bonzi.data_queue.push(function() {
 					type: "text",
 					text: "Yeah, of course you want me to tell a joke."
 				},
+			    {
+					type: "anim",
+					anim: "praise_fwd",
+					ticks: 15
+				},				
 				{
 					type: "text",
-					text: "But I'll do it anyway. Because you want me to. I hope you're happy."
+					text: "Haha! Look at the stupid {COLOR} monkey telling jokes! Fuck you, this isn't funny. "
 				}
+			    {
+					type: "anim",
+					anim: "praise_back",
+					ticks: 15
+				},		
+			    {
+				    type: "text",
+				    text: "But I'll do it anyway. Because you want me to. I hope you're happy."
+			    }				
 			],[
 				{
 					type: "text",
@@ -269,14 +283,22 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Too much Java!"
+					text: "AAAAAAAAAAAAAAAAAAAAAAAAAA"
 				},
+			    {
+				    type: "text",
+				    text: "Sorry. I just had an epiphany of my own sad, sad existence."
+			    }				
 			],[
 				{
 					type: "text",
 					text: "Two sausages are in a pan. One looks at the other and says \"Boy it's hot in here!\" and the other sausage says \"Unbelievable! It's a talking sausage!\"",
 					say: "Two sausages are in a pan. One looks at the other and says, Boy it's hot in here! and the other sausage says, Unbelievable! It's a talking sausage!"
 				},
+				{
+					type: "text",
+					text: "What are you excepting? A 18+ joke? You're a retarded fuck!"
+				},				
 			],[
 				{
 					type: "text",
@@ -284,7 +306,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "I don't know, but it's some sort of tower."
+					text: "A giant inflatable buttplug."
 				}
 			],[
 				{
@@ -293,7 +315,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Me."
+					text: "Sonic's AYOOOOOOOOOOOO- WHAT THE FUUUUUUUUUUUUUUUUUUUUUUUCK?"
 				}
 			],[
 				{
@@ -302,7 +324,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Heavy water."
+					text: "Yo mama!"
 				}
 			],[
 				{
@@ -311,7 +333,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Seamus's younger self."
+					text: "Nintendo!"
 				}
 			],[
 				{
@@ -320,7 +342,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Tick tock."
+					text: "shut the fuck up old hag i don't want to be the HAHAGRETGHESHBATEBTGGAWTGVT type shit."
 				}
 			],[
 				{
@@ -329,7 +351,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "A skinless person."
+					text: "A woman."
 				}
 			],[
 				{
@@ -338,7 +360,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "I don't know, ask Mother Nature."
+					text: "AYOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!"
 				}
 			],[
 				{
@@ -347,7 +369,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Because poor people need it."
+					text: "Because we knead it."
 				}
 			],[
 				{
@@ -356,7 +378,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Crass."
+					text: "AAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSSSSS! FUUUUUUUUUUUUUUUUUUUUUUUUUUCK!!!!!!"
 				}
 			],[
 				{
@@ -365,7 +387,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "A whale"
+					text: "Beefing mouthington."
 				},
 				{
 					type: "text",
@@ -373,7 +395,7 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Another whale."
+					text: "Your asshole!"
 				}
 			]
 		],
@@ -383,11 +405,19 @@ App_Bonzi.data_queue.push(function() {
 					type: "text",
 					text: "You know {NAME}, a good friend laughs at your jokes even when they're not so funny."
 				},
+				{
+					type: "text",
+					text: "And you suck, Thanks."
+				}				
 			],[
 				{
 					type: "text",
 					text: "Where do I come up with these?"
-				}
+				},
+				{
+					type: "text",
+					text: "My fucking ass?"
+				}				
 			],[
 				{
 					type: "text",
@@ -410,13 +440,17 @@ App_Bonzi.data_queue.push(function() {
 				},
 				{
 					type: "text",
-					text: "Or not."
+					text: "Apart from meth."
 				}
 			],[
 				{
 					type: "text",
 					text: "Don't judge me on my sense of humor alone."
-				}
+				},
+				{
+					type: "text",
+					text: "Help me! I'm embarassing myself!"
+				}				
 			]
 		],
 
