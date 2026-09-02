@@ -16,7 +16,6 @@ cd BonziRECHAT
 
 ### Server
 Then, click here in the file explorer:
-<img width="918" height="199" alt="image" src="https://github.com/user-attachments/assets/0c265b5d-4a15-4d2f-b117-e4b2baf982ca" />
 ...then type "cmd", and press Enter.
 
 Run this code in your command line:
