@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twister Ice Fun</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #player-container {
+            width: 640px;
+            height: 480px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flash Player on GitHub Pages</h1>
+    <div id="player-container"></div>
+
+    <!-- Load Ruffle from CDN -->
+    <script src="https://unpkg.com"></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            let ruffle = window.RufflePlayer.newest();
+            let player = ruffle.createPlayer();
+            let container = document.getElementById("player-container");
+            container.appendChild(player);
+            player.load("plosinovka.swf");
+        });
+    </script>
+</body>
+</html>
