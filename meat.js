@@ -636,6 +636,15 @@ exports.beat = function() {
         "https://www.youtube.com/watch?v=8WrZpARf7j0",
         "https://www.youtube.com/watch?v=we3v-jHpUK4",
         "https://www.youtube.com/watch?v=s0Cabc5S7b4",
+        "https://www.youtube.com/watch?v=17VPwelpwT0",
+        "https://www.youtube.com/watch?v=cGbLkuhWNYU",
+        "https://www.youtube.com/watch?v=1kBQtOLGIdY",
+        "https://www.youtube.com/watch?v=whOcZTM0P2I",
+        "https://www.youtube.com/watch?v=8DesnrskDVg",
+        "https://www.youtube.com/watch?v=UYWKCWjjq7Y",
+        "https://www.youtube.com/watch?v=-QAtQBNVapY",
+        "https://www.youtube.com/watch?v=W3FO96OOxmI",
+        "https://www.youtube.com/watch?v=8r7uWBBAJf8",
     ];
 
     var CommercialBreak = [
