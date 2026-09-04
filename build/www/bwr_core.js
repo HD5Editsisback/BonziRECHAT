@@ -1773,6 +1773,12 @@ class Agent {
                                 socket.emit("talk", { text: "Hey, " + this.userPublic.name + "!" });
                             },
                         },
+                        trollify: {
+                            name: `Hey, ${this.userPublic.name}!`,
+                            callback: () => {
+                                socket.emit("talk", { text: "TROLOLOLOLOLOLOLOLOLO!!!!!!!!!!! I LOVE TROLLING AND FLOODING WAAAAAAAAAAAA!!!!!!!" });
+                            },
+                        },                        
                         ...extra,
                     },
                 };
@@ -6905,7 +6911,7 @@ var AgentData = {
     pass_idle: ["gone"],
     event_list_behh_open: [
         [{ type: "text", text: "Prepare your behh, and lets behh, you behh." }],
-        [{ type: "text", text: "Prepare for something Seamus hates so much he will talk about guilt tripping and spying on us like a retard." }, { type: "anim", anim: "praise_fwd", ticks: 15 }, { type: "text", text: "Darllo skidding his code!" }, { type: "anim", anim: "praise_back", ticks: 15 }],
+        [{ type: "text", text: "Prepare for something Siobhan hates so much she will talk about guilt tripping and spying on us like a retard." }, { type: "anim", anim: "praise_fwd", ticks: 15 }, { type: "text", text: "Darllo skidding his code!" }, { type: "anim", anim: "praise_back", ticks: 15 }],
         [{ type: "text", text: "{NAME} used /behh. Time to fucking behh myself." }],
         [{ type: "text", text: "{NAME} asked me for behh spam." }],
         [{ type: "text", text: "Prepare to be behhed." }],
@@ -6964,8 +6970,8 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: '"HAHAHAHA LOOK AT THIS IDIOT NAMED {NAME} TELLING DAD JOKES!" fuk u, That\'s not funny.',
-                say: "HAHAHAHA LOOK AT THIS IDIOT NAMED {NAME} TELLING DAD JOKES! fuck you, That's not funny.",
+                text: '"HAHAHAHA LOOK AT THIS STUPID {COLOR} MORON TELLING YO MAMA JOKES!" fuck u, This isn\'t funny.',
+                say: "HAHAHAHA LOOK AT THIS STUPID {COLOR} MORON TELLING YO MAMA JOKES! fuck you, This isn't funny.",
             },
             {
                 type: "idle",
@@ -6979,8 +6985,8 @@ var AgentData = {
         [
             {
                 type: "text",
-                text: "Time for, whatever horrible fucking jokes the creator of this god awful BWR revival wrote.",
-                say: "Time for, whatever horrible fucking jokes the creator of this god awful BWR revival wrote.",
+                text: "Time for, whatever horrible fucking jokes the creator of this god awful BWCE revival wrote.",
+                say: "Time for, whatever horrible fucking jokes the creator of this god awful BWCE revival wrote.",
             },
         ],
         [
@@ -7034,7 +7040,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Too much Javascript!",
+                text: "BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH WAAAAAAAAAAAAAAAAAAAA YAY HAHA!",
             },
         ],
         [
@@ -7043,6 +7049,10 @@ var AgentData = {
                 text: 'Two sausages are in a pan. One looks at the other and says "Boy it\'s hot in here!" and the other sausage says "Unbelievable! It\'s a talking sausage!"',
                 say: "Two sausages are in a pan. One looks at the other and says, Boy it's hot in here! and the other sausage says, Unbelievable! It's a talking sausage!",
             },
+            {
+                type: "text",
+                text: 'What do you expect this? A 18+ joke? You\'re a retarded fuck!"',
+            },            
         ],
         [
             {
@@ -7051,7 +7061,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Doggis.",
+                text: "A giant inflatable buttplug.",
             },
         ],
         [
@@ -7061,7 +7071,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "TICK TOCK MUTHAFUCKAAAAAAAAAAAAAAAAAAAAA!",
+                text: "shut the fuck up i don't want to be HAHA-NGTDTTREHNETRSZTNTYDRSZE type shit.",
             },
         ],
         [
@@ -7081,7 +7091,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Cum in- HELL NAH BRUDAH.",
+                text: "AYOOOOOOOOOOO WHAT THE FUUUUUUUUUUUUUUUU-",
             },
         ],
         [
@@ -7091,8 +7101,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Because everyone <h3>kneads</h3> it.",
-                say: "Because everyone kneads it. [[???????????]] that wasn't funny bruh",
+                text: "Because we <h3>knead</h3> it.",
             },
         ],
         [
@@ -7102,7 +7111,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Cuz it BSOD'ed all the time.",
+                text: "halo yeur cempuetr hes verus.",
             },
         ],
 
@@ -7113,7 +7122,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "They are scared to touch grass.",
+                text: "OH SHIT! GRASS IS EVIL!!!",
             },
         ],
         [
@@ -7123,7 +7132,8 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Never gonna give you up.",
+                text: "Nah, are we serious right neow bro?",
+                say: "Nah, are we serious right now bro?",
             },
         ],
         [
@@ -7133,7 +7143,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Because it knew nobody would be around to fix it until Monday. Classic.",
+                text: "Because Garfield hates Mondays.",
             },
         ],
         [
@@ -7143,7 +7153,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "WAIT DISCARD THAT BOOBS PART I'M NOT A PERVERT BRUUUUUH!",
+                text: "OH SHIIIIIIIIIIIIT I'M A FUCKING MINOR! DON'T TALK ABOUT THIS!!!",
             },
         ],
         [
@@ -7153,7 +7163,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Wait, dolphins are smart? Holy shit i didn't knew it LMAO",
+                text: "GENIUS!!!!!!!!!",
             },
         ],
         [
@@ -7163,7 +7173,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "\"Go get a better PC mofo.\"",
+                text: "Your minecraft is so laggy.",
             },
         ],
         [
@@ -7183,11 +7193,11 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "A $100 bill. What were YOU thinking about?",
+                text: "SNOOPING AS USEFUL I SEE",
             },
             {
                 type: "anim",
-                anim: "grin_fwd",
+                anim: "laugh",
                 ticks: 15,
             },
         ],
@@ -7198,7 +7208,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Blame Mother Nature.",
+                text: "[[SLAAAAAA??A???A??A???????AAA???????????????",
             },
         ],
 
@@ -7209,7 +7219,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "\"Ello' your computer has virus.\"",
+                text: "I WILL BURN YOUR FUCKING COMPUTER DOWN!!!!!!!!",
             },
         ],
         [
@@ -7229,12 +7239,20 @@ var AgentData = {
                 type: "text",
                 text: "You know {NAME}, a good friend laughs at your jokes even when they're not so funny.",
             },
+            {
+                type: "text",
+                text: "And you fucking suck, thanks.",
+            },
         ],
         [
             {
                 type: "text",
                 text: "Where do I come up with these?",
             },
+            {
+                type: "text",
+                text: "My fucking ass?",
+            },               
         ],
         [
             {
@@ -7243,8 +7261,8 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "pls respond :(",
-                say: "please respond bruh",
+                text: "pls respond",
+                say: "please respond",
             },
         ],
         [
@@ -7268,6 +7286,10 @@ var AgentData = {
                 type: "text",
                 text: "Don't judge me on my sense of humor alone.",
             },
+            {
+                type: "text",
+                text: "Help me! I'm being embarassed! aah~",
+            },            
         ],
         [
             {
@@ -7322,6 +7344,18 @@ var AgentData = {
                 text: "Anyway. Pretend you didn't hear that.",
             },
         ],
+        [
+            {
+                type: "text",
+                text: "If you don't care about my jokes, you go to hell before you die!",
+            },
+        ],   
+        [
+            {
+                type: "text",
+                text: "If you're not a fan of Mario, you're gonna turn into a goomba!",
+            },
+        ],           
     ],
     event_list_fact_open: [
         [
@@ -7543,7 +7577,18 @@ var AgentData = {
                 anim: "fact_back",
                 ticks: 15,
             },
-        ],        
+        ], 
+        [
+               {
+                type: "text",
+                text: "Did you CAAAAAAAAAAAAAA- CAAAAAAAAAAAA- CAAAAAAA- CAA- CA- CUM- AYOOOOOOOOOOOOOOOOOOOOOOOOOOO WHAT THE FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK!?!!?!?!?!!?!?!?!",
+            },
+            {
+                type: "anim",
+                anim: "fact_back",
+                ticks: 15,
+            },   
+       ],     
     ],
     event_list_fact_end: [
         [
@@ -7653,7 +7698,7 @@ AgentData.event_list_pawn = [
     {
         type: "text",
         text:
-            "Hi, my name is {COLOR}, and this is my website. I annoy you when writing a letter. Everything in here has an ad and a fact. One thing I've learned after 28 years - you never know what is gonna eventually irritate you so much you uninstall Microsoft Office",
+            "Hi, my name is {NAME}, and this is my website. I annoy you when writing a letter. Everything in here has an ad and a fact. One thing I've learned after 28 years - you never know what is gonna eventually irritate you so much you uninstall Microsoft Office",
     },
 ];
 AgentData.event_list_bees = [
@@ -7675,8 +7720,52 @@ AgentData.event_list_bees = [
     },
     {
         type: "text",
-        text: "Nah, I'm not doing the whole thing.",
+        text: "Its wings are too small to get its fat little body off the ground.",
     },
+    {
+        type: "text",
+        text: "The bee, of course, flies anyway",
+    }, 
+    {
+        type: "text",
+        text: "because bees don't care",
+    },
+    {
+        type: "text",
+        text: "what humans think is impossible.",
+    }, 
+    {
+        type: "text",
+        text: "Yellow, black. Yellow, black.",
+    }, 
+    {
+        type: "text",
+        text: "Yellow, black. Yellow, black.",
+    },   
+    {
+        type: "text",
+        text: "Ooh, black and yellow!",
+    },
+    {
+        type: "text",
+        text: "Let's shake it up a little.",
+    }, 
+    {
+        type: "text",
+        text: "Hell nah.",
+    }, 
+    {
+        type: "text",
+        text: "I'm not doing the whole fucking copypasta thingy.",
+    },    
+    {
+        type: "text",
+        text: "...",
+    },  
+    {
+        type: "text",
+        text: "FUCK YOU!!!",
+    },       
 ];
 $(document).ready(function () {
     window.onbeforeunload = function(event)
