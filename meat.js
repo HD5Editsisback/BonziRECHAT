@@ -15,7 +15,6 @@ const floodViolations = new Map();
 const connectionTracker = new Map();
 
 var colors = fs.readFileSync("./colors.txt").toString().replace(/\r/,"").split("\n");
-var blacklist = fs.readFileSync("./blacklist.txt").toString().replace(/\r/,"").split("\n");
 var colorBlacklist = fs.readFileSync("./colorWhitelist.txt").toString().replace(/\r/,"").split("\n");
 
 var proxyBlocklist = (function() {
