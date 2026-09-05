@@ -7096,13 +7096,18 @@ var AgentData = {
             },
             {
                 type: "anim",
-                anim: "suprised_fwd",
+                anim: "surprised_fwd",
                 ticks: 15,
             },
             {
                 type: "text",
                 text: "AYOOOOOOOOOOO WHAT THE FUUUUUUUUUUUUUUUU-",
-            },         
+            }, 
+            {
+                type: "anim",
+                anim: "surprised_back",
+                ticks: 15,
+            },                        
         ],
         [
             {
@@ -7133,13 +7138,18 @@ var AgentData = {
             },
             {
                 type: "anim",
-                anim: "suprised_fwd",
+                anim: "surprised_fwd",
                 ticks: 15,
             },         
             {
                 type: "text",
                 text: "OH SHIT! GRASS IS EVIL!!!",
             },
+            {
+                type: "anim",
+                anim: "surprised_back",
+                ticks: 15,
+            },               
         ],
         [
             {
@@ -7169,13 +7179,18 @@ var AgentData = {
             },
             {
                 type: "anim",
-                anim: "suprised_fwd",
+                anim: "surprised_fwd",
                 ticks: 15,
             },            
             {
                 type: "text",
                 text: "OH SHIIIIIIIIIIIIT I'M A FUCKING MINOR! DON'T TALK ABOUT THIS!!!",
             },
+            {
+                type: "anim",
+                anim: "surprised_back",
+                ticks: 15,
+            },               
         ],
         [
             {
