@@ -7112,7 +7112,7 @@ var AgentData = {
             {
                 type: "text",
                 text: "Because we <h3>knead</h3> it.",
-                speak: "Because we need it.",
+                say: "Because we need it.",
             },
         ],
         [
