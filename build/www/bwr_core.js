@@ -6978,8 +6978,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "But I'll do it anyway. Because you want me to. I hope you're happy. :|",
-                say: "But I'll do it anyway. Because you want me to. I hope you're happy.",
+                text: "But I'll do it anyway. Because you want me to. I hope you're happy.",
             },
         ],
         [
@@ -7031,6 +7030,12 @@ var AgentData = {
                 text: "OK, prepare to not laugh, {NAME}.",
             },
         ],
+        [,   
+            {
+                type: "text",
+                text: "{NAME}'s ska-jokes! We can fucking doo!",
+            },
+        ],
     ],
     event_list_joke_mid: [
         [
@@ -7040,7 +7045,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH WAAAAAAAAAAAAAAAAAAAA YAY HAHA!",
+                text: "BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH BEHH! WAAAAAAAAAAAAAAAAAAAA! YAY HAHA!",
             },
         ],
         [
@@ -7090,9 +7095,14 @@ var AgentData = {
                 text: "How do you get water in watermelons?",
             },
             {
+                type: "anim",
+                anim: "suprised_fwd",
+                ticks: 15,
+            },
+            {
                 type: "text",
                 text: "AYOOOOOOOOOOO WHAT THE FUUUUUUUUUUUUUUUU-",
-            },
+            },         
         ],
         [
             {
@@ -7102,6 +7112,7 @@ var AgentData = {
             {
                 type: "text",
                 text: "Because we <h3>knead</h3> it.",
+                speak: "Because we need it.",
             },
         ],
         [
@@ -7111,7 +7122,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "halo yeur cempuetr hes verus.",
+                text: "[[halo yeur cempuetr hes verus.",
             },
         ],
 
@@ -7120,6 +7131,11 @@ var AgentData = {
                 type: "text",
                 text: "Why don't programmers like nature?",
             },
+            {
+                type: "anim",
+                anim: "suprised_fwd",
+                ticks: 15,
+            },         
             {
                 type: "text",
                 text: "OH SHIT! GRASS IS EVIL!!!",
@@ -7152,6 +7168,11 @@ var AgentData = {
                 text: "What do boobs and toys have in common?",
             },
             {
+                type: "anim",
+                anim: "suprised_fwd",
+                ticks: 15,
+            },            
+            {
                 type: "text",
                 text: "OH SHIIIIIIIIIIIIT I'M A FUCKING MINOR! DON'T TALK ABOUT THIS!!!",
             },
@@ -7183,7 +7204,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "LET IT GOOOOOO LET IT GOOOOOOO",
+                text: "GRRRRRRRRRRRRR SPONGEBOB BETRAYED US",
             },
         ],
         [
@@ -7208,7 +7229,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "[[SLAAAAAA??A???A??A???????AAA???????????????",
+                text: "[[SLAAAAAA??A???A??A???????AAA???????????????A",
             },
         ],
 
@@ -7229,7 +7250,7 @@ var AgentData = {
             },
             {
                 type: "text",
-                text: "Got any grapes?",
+                text: "Hey, Got any grapes?",
             },
         ],
     ],
